@@ -2,985 +2,362 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>京东 vs 淘宝 权益体系横向比较分析报告</title>
+<title>Rocket Lab (RKLB) 投资价值与时机深度解析 · 小白友好版</title>
 <style>
-  :root {
-    --jd-red: #E2231A;
-    --tb-orange: #FF6A00;
-    --jd-bg: #FFF5F5;
-    --tb-bg: #FFF8F0;
-    --fact-bg: #F0F7FF;
-    --infer-bg: #FFFBE6;
-    --infer-border: #FAAD14;
-    --gap-bg: #FFF1F0;
-    --gap-border: #FF4D4F;
-    --section-bg: #FAFBFC;
-    --text-primary: #1A1A2E;
-    --text-secondary: #555;
-    --border-light: #E8E8E8;
-    --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background: #F5F6FA;
-    color: var(--text-primary);
-    line-height: 1.8;
-    padding: 0;
-  }
-
-  .report-container {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 40px 24px;
-  }
-
-  /* Header */
-  .report-header {
-    background: linear-gradient(135deg, #1A1A2E 0%, #2D3561 100%);
-    color: #fff;
-    padding: 48px 40px;
-    border-radius: 16px;
-    margin-bottom: 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .report-header::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255,106,0,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .report-header::before {
-    content: '';
-    position: absolute;
-    bottom: -40%;
-    left: -5%;
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(226,35,26,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .report-header h1 {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    position: relative;
-    z-index: 1;
-  }
-  .report-header .subtitle {
-    font-size: 15px;
-    opacity: 0.85;
-    position: relative;
-    z-index: 1;
-    line-height: 1.6;
-  }
-  .report-header .meta-tags {
-    margin-top: 16px;
-    position: relative;
-    z-index: 1;
-  }
-  .report-header .meta-tag {
-    display: inline-block;
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.25);
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    margin-right: 8px;
-    margin-top: 4px;
-  }
-
-  /* Section */
-  .section {
-    background: #fff;
-    border-radius: 12px;
-    padding: 32px;
-    margin-bottom: 24px;
-    box-shadow: var(--card-shadow);
-  }
-  .section-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--border-light);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-title .icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    color: #fff;
-    flex-shrink: 0;
-  }
-
-  /* Platform labels */
-  .platform-jd {
-    background: var(--jd-red);
-    color: #fff;
-    padding: 2px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-  }
-  .platform-tb {
-    background: var(--tb-orange);
-    color: #fff;
-    padding: 2px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-  }
-
-  /* Fact & Inference tags */
-  .tag-fact {
-    display: inline-block;
-    background: #E6F7FF;
-    color: #1890FF;
-    border: 1px solid #91D5FF;
-    padding: 1px 8px;
-    border-radius: 3px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-left: 4px;
-    vertical-align: middle;
-  }
-  .tag-infer {
-    display: inline-block;
-    background: var(--infer-bg);
-    color: #D48806;
-    border: 1px solid var(--infer-border);
-    padding: 1px 8px;
-    border-radius: 3px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-left: 4px;
-    vertical-align: middle;
-  }
-  .tag-verify {
-    display: inline-block;
-    background: #FFF7E6;
-    color: #AD6800;
-    border: 1px solid #FFD591;
-    padding: 1px 8px;
-    border-radius: 3px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-left: 4px;
-    vertical-align: middle;
-  }
-
-  /* Comparison Table */
-  .compare-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
-    font-size: 14px;
-  }
-  .compare-table thead th {
-    background: #F5F6FA;
-    padding: 12px 16px;
-    text-align: left;
-    font-weight: 600;
-    border-bottom: 2px solid var(--border-light);
-    font-size: 13px;
-  }
-  .compare-table thead th:first-child {
-    border-radius: 8px 0 0 0;
-  }
-  .compare-table thead th:last-child {
-    border-radius: 0 8px 0 0;
-  }
-  .compare-table thead th.col-jd {
-    background: var(--jd-bg);
-    color: var(--jd-red);
-  }
-  .compare-table thead th.col-tb {
-    background: var(--tb-bg);
-    color: var(--tb-orange);
-  }
-  .compare-table tbody td {
-    padding: 12px 16px;
-    border-bottom: 1px solid #F0F0F0;
-    vertical-align: top;
-  }
-  .compare-table tbody tr:hover {
-    background: #FAFBFC;
-  }
-  .compare-table .dim-cell {
-    font-weight: 600;
-    background: #FAFBFC;
-    white-space: nowrap;
-    width: 120px;
-  }
-  .compare-table .kano-tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-top: 4px;
-  }
-  .kano-basic { background: #F6FFED; color: #389E0D; border: 1px solid #B7EB8F; }
-  .kano-expect { background: #E6F7FF; color: #1890FF; border: 1px solid #91D5FF; }
-  .kano-excite { background: #F9F0FF; color: #722ED1; border: 1px solid #D3ADF7; }
-
-  /* Cards */
-  .card-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 16px 0;
-  }
-  .card {
-    border-radius: 10px;
-    padding: 20px;
-    border: 1px solid var(--border-light);
-  }
-  .card-jd {
-    border-left: 4px solid var(--jd-red);
-    background: var(--jd-bg);
-  }
-  .card-tb {
-    border-left: 4px solid var(--tb-orange);
-    background: var(--tb-bg);
-  }
-  .card h4 {
-    font-size: 15px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .card ul {
-    list-style: none;
-    padding: 0;
-  }
-  .card ul li {
-    padding: 4px 0;
-    font-size: 13px;
-    line-height: 1.7;
-    position: relative;
-    padding-left: 16px;
-  }
-  .card ul li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: #999;
-    font-weight: bold;
-  }
-
-  /* Score bar */
-  .score-row {
-    display: flex;
-    align-items: center;
-    margin: 8px 0;
-    gap: 12px;
-  }
-  .score-label {
-    width: 80px;
-    font-size: 13px;
-    font-weight: 600;
-    text-align: right;
-    flex-shrink: 0;
-  }
-  .score-bar-wrap {
-    flex: 1;
-    background: #F0F0F0;
-    border-radius: 6px;
-    height: 22px;
-    position: relative;
-    overflow: hidden;
-  }
-  .score-bar {
-    height: 100%;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #fff;
-    transition: width 0.3s;
-  }
-  .bar-jd { background: linear-gradient(90deg, #E2231A, #FF6B6B); }
-  .bar-tb { background: linear-gradient(90deg, #FF6A00, #FFB347); }
-
-  /* Insight box */
-  .insight-box {
-    background: var(--fact-bg);
-    border: 1px solid #BAE7FF;
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin: 16px 0;
-    font-size: 14px;
-  }
-  .insight-box.infer {
-    background: var(--infer-bg);
-    border-color: var(--infer-border);
-  }
-  .insight-box .insight-title {
-    font-weight: 700;
-    margin-bottom: 6px;
-    font-size: 14px;
-  }
-
-  /* Gap box */
-  .gap-box {
-    background: var(--gap-bg);
-    border: 1px solid var(--gap-border);
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin: 12px 0;
-    font-size: 13px;
-  }
-  .gap-box .gap-title {
-    font-weight: 700;
-    color: #CF1322;
-    margin-bottom: 6px;
-  }
-
-  /* Source link */
-  .source-link {
-    font-size: 11px;
-    color: #1890FF;
-    text-decoration: none;
-    word-break: break-all;
-  }
-  .source-link:hover {
-    text-decoration: underline;
-  }
-  .source-ref {
-    font-size: 11px;
-    color: #999;
-    margin-top: 4px;
-  }
-
-  /* Method section */
-  .method-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 16px;
-  }
-  .method-card {
-    background: var(--section-bg);
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    padding: 16px;
-  }
-  .method-card h4 {
-    font-size: 14px;
-    margin-bottom: 8px;
-    color: var(--text-primary);
-  }
-  .method-card p {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-  }
-
-  /* Limitation list */
-  .limitation-list {
-    list-style: none;
-    padding: 0;
-  }
-  .limitation-list li {
-    padding: 10px 16px;
-    margin: 8px 0;
-    background: #FFFBE6;
-    border: 1px solid #FFE58F;
-    border-radius: 6px;
-    font-size: 13px;
-    line-height: 1.7;
-  }
-  .limitation-list li.critical {
-    background: var(--gap-bg);
-    border-color: var(--gap-border);
-  }
-
-  /* Summary verdict */
-  .verdict-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin: 20px 0;
-  }
-  .verdict-card {
-    border-radius: 10px;
-    padding: 24px;
-    text-align: center;
-  }
-  .verdict-card.jd {
-    background: linear-gradient(135deg, var(--jd-bg), #FFE8E6);
-    border: 2px solid var(--jd-red);
-  }
-  .verdict-card.tb {
-    background: linear-gradient(135deg, var(--tb-bg), #FFE7CC);
-    border: 2px solid var(--tb-orange);
-  }
-  .verdict-card h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-  .verdict-card .verdict-keyword {
-    font-size: 22px;
-    font-weight: 800;
-    margin: 8px 0;
-  }
-  .verdict-card p {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  /* TOC */
-  .toc {
-    background: var(--section-bg);
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    padding: 16px 24px;
-    margin-bottom: 24px;
-  }
-  .toc h3 {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 10px;
-  }
-  .toc ol {
-    padding-left: 20px;
-  }
-  .toc ol li {
-    font-size: 14px;
-    padding: 3px 0;
-    color: var(--text-primary);
-  }
-
-  /* Footnotes */
-  .footnote {
-    font-size: 12px;
-    color: #999;
-    border-top: 1px solid var(--border-light);
-    padding-top: 16px;
-    margin-top: 24px;
-    line-height: 1.8;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .report-container { padding: 16px 12px; }
-    .report-header { padding: 32px 20px; }
-    .report-header h1 { font-size: 22px; }
-    .section { padding: 20px 16px; }
-    .card-grid, .method-grid, .verdict-grid { grid-template-columns: 1fr; }
-    .compare-table { font-size: 12px; }
-    .compare-table thead th, .compare-table tbody td { padding: 8px 10px; }
-  }
-
-  .detail-subsection {
-    margin: 24px 0;
-    padding: 20px;
-    background: var(--section-bg);
-    border-radius: 8px;
-    border: 1px solid var(--border-light);
-  }
-  .detail-subsection h3 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 14px;
-    color: var(--text-primary);
-  }
-
-  .matrix-note {
-    font-size: 12px;
-    color: #999;
-    margin-top: 8px;
-    font-style: italic;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6fa;color:#2c3e50;line-height:1.7;padding:30px 20px}
+.container{max-width:1100px;margin:0 auto;background:#fff;padding:50px 60px;border-radius:8px;box-shadow:0 2px 20px rgba(0,0,0,0.06)}
+h1{font-size:30px;color:#1a2c5b;border-bottom:3px solid #2e5cb8;padding-bottom:15px;margin-bottom:8px}
+h2{font-size:22px;color:#1a2c5b;margin-top:45px;margin-bottom:18px;padding-left:12px;border-left:5px solid #2e5cb8}
+h3{font-size:17px;color:#34495e;margin-top:25px;margin-bottom:12px}
+h4{font-size:15px;color:#555;margin-top:18px;margin-bottom:8px}
+p{margin-bottom:12px;font-size:14.5px}
+.subtitle{color:#666;font-size:15px;margin-bottom:30px;font-style:italic}
+.tldr{background:linear-gradient(135deg,#fff8e1 0%,#fff3cd 100%);border-left:5px solid #f39c12;padding:20px 25px;border-radius:6px;margin:20px 0}
+.tldr-title{font-weight:bold;color:#b8860b;font-size:16px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border:1px solid #e0e4eb}
+th{background:#2e5cb8;color:#fff;font-weight:600}
+tr:nth-child(even){background:#f8f9fc}
+.fact{background:#eaf4ff;border-left:3px solid #2e5cb8;padding:8px 12px;margin:6px 0;font-size:14px;border-radius:3px}
+.fact::before{content:"📊 事实 ";font-weight:bold;color:#2e5cb8;font-size:12px}
+.inference{background:#fef3e7;border-left:3px solid #e67e22;padding:8px 12px;margin:6px 0;font-size:14px;border-radius:3px;font-style:italic}
+.inference::before{content:"💡 推断 ";font-weight:bold;color:#e67e22;font-size:12px;font-style:normal}
+.gap{background:#fdecea;border-left:3px solid #e74c3c;padding:8px 12px;margin:6px 0;font-size:14px;border-radius:3px}
+.gap::before{content:"⚠️ 缺口 ";font-weight:bold;color:#e74c3c;font-size:12px}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:600;margin-right:6px}
+.tag-fact{background:#d4e6ff;color:#1a4789}
+.tag-inf{background:#ffe4c4;color:#a05000}
+.tag-low{background:#fdd;color:#a00}
+.tag-mid{background:#fff3cd;color:#856404}
+.tag-high{background:#d4edda;color:#155724}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;margin:15px 0}
+.card{background:#f8f9fc;border:1px solid #e0e4eb;border-radius:6px;padding:15px;border-top:3px solid #2e5cb8}
+.card-title{font-size:13px;color:#666;margin-bottom:6px}
+.card-value{font-size:22px;font-weight:bold;color:#1a2c5b}
+.card-sub{font-size:12px;color:#888;margin-top:5px}
+.bar-container{background:#e8eaf0;height:18px;border-radius:9px;overflow:hidden;margin:4px 0}
+.bar{height:100%;border-radius:9px;color:#fff;text-align:right;padding-right:8px;font-size:11px;line-height:18px}
+.matrix{display:grid;grid-template-columns:140px repeat(4,1fr);gap:1px;background:#e0e4eb;margin:15px 0}
+.matrix>div{background:#fff;padding:10px;font-size:13px}
+.matrix-header{background:#2e5cb8!important;color:#fff;font-weight:600}
+.matrix-row-label{background:#f0f2f7!important;font-weight:600}
+.source{font-size:11px;color:#7088b8}
+.source a{color:#2e5cb8;text-decoration:none}
+.source a:hover{text-decoration:underline}
+.score{display:inline-block;padding:3px 10px;border-radius:4px;font-weight:bold;font-size:13px;color:#fff}
+.s-good{background:#27ae60}
+.s-mid{background:#f39c12}
+.s-bad{background:#e74c3c}
+.s-unknown{background:#95a5a6}
+.method-box{background:#f0f4fa;padding:15px 20px;border-radius:6px;margin:10px 0;font-size:13.5px}
+.legend{display:flex;gap:15px;flex-wrap:wrap;margin:10px 0;padding:10px;background:#f8f9fc;border-radius:5px;font-size:12px}
+.legend-item{display:flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%}
+ul{padding-left:22px}
+ul li{margin-bottom:6px;font-size:14px}
+.foot{margin-top:50px;padding-top:20px;border-top:1px solid #eee;font-size:12px;color:#888;text-align:center}
 </style>
 </head>
 <body>
+<div class="container">
 
-<div class="report-container">
+<h1>🚀 Rocket Lab (RKLB) 投资价值与时机深度解析</h1>
+<p class="subtitle">面向航空领域小白 · 聚焦中子号交付预期与零部件/系统业务 · 基准时点 2026-06-23</p>
 
-  <!-- ========== HEADER ========== -->
-  <div class="report-header">
-    <h1>京东 PLUS vs 淘宝 88VIP · 权益体系横向比较分析</h1>
-    <div class="subtitle">
-      从产品设计与运营策略两个层面，系统对比两大电商平台付费会员权益体系的设计理念、使用规则与发放策略差异。
-    </div>
-    <div class="meta-tags">
-      <span class="meta-tag">📊 对比类研究</span>
-      <span class="meta-tag">🔍 功能对标矩阵 + Kano 模型</span>
-      <span class="meta-tag">📡 SOV 同口径对比</span>
-      <span class="meta-tag">📅 2024–2025</span>
-    </div>
+<div class="legend">
+  <div class="legend-item"><span class="dot" style="background:#2e5cb8"></span>事实（来自档案证据，可点链接核验）</div>
+  <div class="legend-item"><span class="dot" style="background:#e67e22"></span>推断（基于事实的分析判断，非档案直接陈述）</div>
+  <div class="legend-item"><span class="dot" style="background:#e74c3c"></span>缺口（档案未覆盖，需人工补充）</div>
+</div>
+
+<div class="tldr">
+  <div class="tldr-title">📌 一句话研究目标</div>
+  为航空领域小白，从产品（中子号）、商业模式（Space Systems 零部件/系统）、财务安全边际、竞争格局四个维度，判断 RKLB 的投资价值与入场时机。
+</div>
+
+<div class="tldr">
+  <div class="tldr-title">⚠️ 关于本报告结构的说明</div>
+  本次研究性质为<b>"投资评估类（综合判断）"</b>，因此采用"评估维度逐项打分 + 关键议题深挖"的组织方式：先给出四维评估快照，再分别就最关键的三个子问题（财务安全边际、中子号技术进度、Space Systems 业务）展开。同时，由于档案中实际采集到的硬数据集中在 <b>2025 财年财务</b> 与 <b>2024 年度业绩摘要</b>，其余维度的"事实证据"较薄，本报告会用大量【推断】标签和【缺口】提示，确保读者能分清"哪些是查到的、哪些是分析得来的"。
+</div>
+
+<!-- ============ 评估结论 ============ -->
+<h2>一、综合评估结论（四维打分）</h2>
+
+<table>
+<thead><tr><th width="22%">评估维度</th><th width="12%">档案数据充分度</th><th width="14%">现状评分</th><th>关键依据 / 信号</th></tr></thead>
+<tbody>
+<tr>
+  <td><b>① 财务安全边际</b><br><span style="font-size:12px;color:#888">现金 vs 烧钱</span></td>
+  <td><span class="tag tag-high">充分</span></td>
+  <td><span class="score s-mid">中性偏正面</span></td>
+  <td>2025 年末现金 <b>$833.5M</b>，全年经营现金流出 -$165.5M，自由现金流 -$321.4M；融资活动入账 $1.07B 显著回血。<span class="tag tag-fact">事实</span></td>
+</tr>
+<tr>
+  <td><b>② 中子号交付预期</b><br><span style="font-size:12px;color:#888">Archimedes 发动机进度</span></td>
+  <td><span class="tag tag-low">不足</span></td>
+  <td><span class="score s-unknown">无法判定</span></td>
+  <td>档案未抓取到 Archimedes 全推力点火测试次数与累计时长的硬数据。<span class="tag tag-inf">推断</span>：在缺乏公开测试里程碑数据的情况下，交付时间表的可信度需打折扣。</td>
+</tr>
+<tr>
+  <td><b>③ Space Systems 业务</b><br><span style="font-size:12px;color:#888">收入结构与战略地位</span></td>
+  <td><span class="tag tag-low">不足</span></td>
+  <td><span class="score s-mid">中性</span></td>
+  <td>仅有集团层面 2024 全年营收 <b>$436.2M（+78% YoY）</b> 及 2024 年新签合同 <b>>$450M</b>；分部明细未抓取到。<span class="tag tag-fact">事实</span></td>
+</tr>
+<tr>
+  <td><b>④ 竞争格局定位</b><br><span style="font-size:12px;color:#888">vs SpaceX/ULA/Relativity</span></td>
+  <td><span class="tag tag-low">未采集</span></td>
+  <td><span class="score s-unknown">无法判定</span></td>
+  <td>本期检索资源全部用于前三项，竞争格局子问题被暂缓。<span class="tag tag-inf">推断</span>仅能给出方向性观察。</td>
+</tr>
+</tbody>
+</table>
+
+<div class="tldr">
+  <div class="tldr-title">🎯 给小白的入场时机建议（基于现有证据的【推断】）</div>
+  <p><span class="tag tag-inf">推断</span>RKLB 目前处于<b>"高成长 + 高烧钱 + 现金充足"</b>的典型早期成长股阶段。账上 $8.3 亿现金按当前经营现金流出速率（约 $1.65 亿/年）可支撑 <b>约 5 年</b>运营，短期不存在"资金链断裂"风险，因此<b>不存在"必须立刻避开"的紧迫卖出理由</b>。</p>
+  <p><span class="tag tag-inf">推断</span>但投资<b>价值的核心拐点</b>——中子号首飞成功与商业订单兑现——在本档案中<b>缺乏硬数据支撑</b>。对小白而言，更稳妥的策略是<b>"等待两个验证信号"</b>：①Archimedes 发动机完成全推力静态点火的官方公告；②季度财报中 Space Systems 经常性收入占比披露。在此之前的建仓应控制在投资组合的<b>小比例试探仓位</b>。</p>
+</div>
+
+<!-- ============ 维度一：财务 ============ -->
+<h2>二、财务安全边际深度拆解（最硬的数据）</h2>
+
+<div class="method-box">
+<b>🔧 分析方法</b>：本节使用档案②指定的<b>"财务比率分析 + Altman Z-Score 思路"</b>骨架，重点落实"现金储备 / 烧钱速率 / 盈利路径"三个核心关切。
+</div>
+
+<h3>2.1 现金与烧钱速率快照（FY2025）</h3>
+<div class="cards">
+  <div class="card"><div class="card-title">期末现金</div><div class="card-value">$833.5M</div><div class="card-sub">较年初 $275.3M ↑202%</div></div>
+  <div class="card"><div class="card-title">经营现金流</div><div class="card-value" style="color:#e74c3c">-$165.5M</div><div class="card-sub">主业仍在烧钱</div></div>
+  <div class="card"><div class="card-title">自由现金流 (FCF)</div><div class="card-value" style="color:#e74c3c">-$321.4M</div><div class="card-sub">含中子号资本开支</div></div>
+  <div class="card"><div class="card-title">净亏损</div><div class="card-value" style="color:#e74c3c">-$198.2M</div><div class="card-sub">GAAP 口径</div></div>
+  <div class="card"><div class="card-title">营业收入</div><div class="card-value" style="color:#27ae60">$601.8M</div><div class="card-sub">FY2025 全年</div></div>
+  <div class="card"><div class="card-title">EBITDA</div><div class="card-value" style="color:#e74c3c">-$181.8M</div><div class="card-sub">距盈亏平衡仍远</div></div>
+</div>
+
+<div class="fact">FY2025 现金及等价物期末 $833.54M（年初 $275.30M）；经营活动现金流 -$165.52M；投资活动 -$347.40M；融资活动 +$1.07B；净现金增加 $558.24M。<br><span class="source">来源：<a href="https://www.alphaquery.com/stock/RKLB/fundamentals/annual/free-cash-flow" target="_blank">AlphaQuery – RKLB FCF Annual</a></span></div>
+
+<div class="fact">FY2025 营收 $601.80M；营业亏损 -$228.84M；EBITDA -$181.76M；股权薪酬（非现金）$71.10M。<br><span class="source">来源：<a href="https://www.alphaquery.com/stock/RKLB/fundamentals/annual/free-cash-flow" target="_blank">AlphaQuery – RKLB FCF Annual</a></span></div>
+
+<div class="fact">FY2024 全年营收 $436.2M（+78% YoY）；Q4 2024 营收 $132.4M（+121% YoY）；2024 年新签发射与空间系统合同 > $450M。<br><span class="source">来源：<a href="https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-full-year-fourth-quarter-2024-financial" target="_blank">Rocket Lab 官方 IR – FY2024 Earnings Release</a></span></div>
+
+<h3>2.2 现金跑道测算（关键安全边际指标）</h3>
+
+<table>
+<thead><tr><th>测算口径</th><th>分子（可用现金）</th><th>分母（年消耗）</th><th>可支撑时长</th><th>解读</th></tr></thead>
+<tbody>
+<tr><td>乐观口径（经营现金流）</td><td>$833.5M</td><td>$165.5M/年</td><td><b style="color:#27ae60">约 60 个月（5 年）</b></td><td>仅维持现有业务运转</td></tr>
+<tr><td>保守口径（自由现金流，含 CapEx）</td><td>$833.5M</td><td>$321.4M/年</td><td><b style="color:#f39c12">约 31 个月（2.6 年）</b></td><td>持续重资本投入中子号</td></tr>
+</tbody>
+</table>
+
+<div class="inference">在"保守口径"下，RKLB 现金大约能支撑到 2028 年底。考虑到中子号首飞窗口（管理层历史指引在 2025-2026 年区间，但本档案未抓取到 2026 年最新更新），<b>"现金跑道"与"中子号商业化时间表"基本匹配</b>——但<b>容错空间不大</b>。若中子号延期至 2028 年之后，公司大概率需要再次融资，从而带来股权稀释压力。</div>
+
+<h3>2.3 资产负债健康度</h3>
+<div class="fact">截至 2025-12-31：总资产 $2.32B；总负债 $602.6M；股东权益 $1.72B；长期债务 $168.8M。<br><span class="source">来源：<a href="https://www.alphaquery.com/stock/RKLB/fundamentals/annual/free-cash-flow" target="_blank">AlphaQuery – RKLB</a></span></div>
+
+<div class="inference">资产负债结构相对健康：长期债务仅 $168.8M，仅占总资产 7.3%，远低于硬件制造业的常见水平。这意味着 RKLB <b>不是死于"债务到期"，而可能死于"现金烧完前没把中子号搞上天"</b>。</div>
+
+<h3>2.4 盈利路径信号</h3>
+<div class="fact">Q1 2025 公司指引：营收 $117–123M；GAAP 毛利率 25–27%（Non-GAAP 30–32%）；调整后 EBITDA 亏损 $33–35M；股权薪酬 $16–18M。<br><span class="source">来源：<a href="https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-full-year-fourth-quarter-2024-financial" target="_blank">Rocket Lab 官方 IR</a></span></div>
+
+<div class="inference">毛利率已进入 25-30% 区间（Non-GAAP），是<b>正向信号</b>——说明 Launch + Space Systems 主业本身在卖一单赚一单（虽不多），亏损主要来自研发与运营费用、而非"卖一单亏一单"。这与早期商业航天公司（如 Astra、Virgin Orbit 上市初期负毛利）形成结构性差异。</div>
+
+<div class="gap">档案缺口：未抓取到 FY2023 与 FY2024 的对应现金流量表（经营现金流、FCF、净亏损），<b>无法直接验证"亏损是否逐年收窄"</b>。Non-GAAP 盈亏平衡的具体收入门槛与时间表也未在抓取的正文中出现。</div>
+
+<!-- ============ 维度二：中子号 ============ -->
+<h2>三、中子号交付预期评估（RICE + Kano 框架）</h2>
+
+<div class="method-box">
+<b>🔧 分析方法</b>：使用档案②指定的 <b>RICE 打分框架 + Kano 模型</b>。本节本应基于 Archimedes 发动机点火测试硬数据评估 TRL（技术成熟度），但<b>该项关键证据未能在本期抓取中获得</b>，因此评估以"结构化的不确定性"形式呈现。
+</div>
+
+<div class="matrix">
+  <div class="matrix-header">RICE 维度</div>
+  <div class="matrix-header">含义（小白版）</div>
+  <div class="matrix-header">档案证据</div>
+  <div class="matrix-header">推断评估</div>
+  <div class="matrix-header">Kano 属性</div>
+
+  <div class="matrix-row-label">Reach 触达</div>
+  <div>能服务多少市场（订单/合同）</div>
+  <div><span class="tag tag-fact">事实</span>2024 新签合同 >$450M（含发射与空间系统）</div>
+  <div><span class="tag tag-inf">推断</span>中子号专项订单细分不明，但集团 backlog 在累积，方向正面</div>
+  <div>基本属性</div>
+
+  <div class="matrix-row-label">Impact 影响</div>
+  <div>技术成熟度（Archimedes 发动机）</div>
+  <div><span class="tag tag-low">缺口</span>未抓取到点火测试次数/时长</div>
+  <div><span class="tag tag-inf">推断</span>在公开里程碑稀缺的情况下，TRL 不明 = 风险溢价应上调</div>
+  <div>基本属性（致命项）</div>
+
+  <div class="matrix-row-label">Confidence 信心</div>
+  <div>官方时间表的兑现率</div>
+  <div><span class="tag tag-low">缺口</span>本期未采集跳票历史</div>
+  <div><span class="tag tag-inf">推断</span>商业航天首飞历史性延期是常态（Vulcan、New Glenn 均跳票多次），中子号大概率不例外</div>
+  <div>基本属性</div>
+
+  <div class="matrix-row-label">Effort 投入</div>
+  <div>距首飞还要烧多少钱</div>
+  <div><span class="tag tag-fact">事实</span>FY2025 FCF -$321M，期末现金 $833.5M</div>
+  <div><span class="tag tag-inf">推断</span>资金可支撑 ~2.6 年保守烧钱，覆盖首飞窗口可行但无大余量</div>
+  <div>—</div>
+</div>
+
+<div class="inference"><b>给小白的中子号风险地图</b>：把中子号想成一个"航天界的造车新势力首款车"——发动机=电池，是命门。<b>在 Archimedes 发动机完成全推力静态点火并对外公告之前，任何"X 年首飞"的时间表都应视为"管理层愿景"而非"工程承诺"</b>。投资者应高度关注 RKLB 后续季度的 8-K 重大事项披露与官方 YouTube 测试视频更新。</div>
+
+<div class="gap">档案缺口（关键）：①Archimedes 发动机点火测试硬数据未获取；②中子号首飞时间表的最新调整（2026 年口径）未获取；③一级回收复用方案的地面验证测试数据未获取。这三项是判断"中子号是否会再次跳票"的核心依据，建议人工补充检索 RKLB 官方 IR 页面 2026 年 Q1/Q2 财报电话会与 8-K。</div>
+
+<!-- ============ 维度三：Space Systems ============ -->
+<h2>四、Space Systems（零部件/系统）业务评估</h2>
+
+<div class="method-box">
+<b>🔧 分析方法</b>：使用档案②指定的<b>商业模式画布（BMC 9 模块）</b>。由于档案未抓取到 Space Systems 分部财报明细，本节以"画布占位 + 已知拼图"方式呈现，并明确标注哪些模块是【缺口】。
+</div>
+
+<div class="matrix" style="grid-template-columns:repeat(3,1fr)">
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>👥 客户细分</h4>
+    <div class="gap">档案未获取分部客户构成（NASA/DoD/商业卫星比例）</div>
   </div>
-
-  <!-- ========== TOC ========== -->
-  <div class="toc">
-    <h3>📑 报告结构</h3>
-    <ol>
-      <li>综合分析结论 — 按对比维度呈现核心差异与综合判断</li>
-      <li>逐维详述 — 权益类型与层次 / 使用规则对比 / 发放策略对比</li>
-      <li>方法说明 — 分析模型、检索与筛选策略透明化</li>
-      <li>局限与待补 — 缺口、低置信项与人工复核建议</li>
-    </ol>
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>💎 价值主张</h4>
+    <div class="inference">"一站式卫星总成 + 关键零部件"，覆盖太阳能板、星跟踪器、推进系统等。<b>稀缺性待评估</b>。</div>
   </div>
-
-  <!-- ========== 1. 综合分析结论 ========== -->
-  <div class="section">
-    <div class="section-title">
-      <span class="icon" style="background:#2D3561;">1</span>
-      综合分析结论
-    </div>
-
-    <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">
-      本研究属于<strong>对比类</strong>课题，因此按对比维度并列组织——每维度呈现京东 PLUS 与淘宝 88VIP 的具体差异与高下，最后给出综合判断。所有结论标注"事实"或"推断"以供区分。
-    </p>
-
-    <!-- 功能对标矩阵总览表 -->
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th style="width:140px;">对比维度</th>
-          <th class="col-jd" style="width:38%;">京东 PLUS</th>
-          <th class="col-tb" style="width:38%;">淘宝 88VIP</th>
-          <th style="width:80px;">Kano 属性</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="dim-cell">年费定价</td>
-          <td>99–149 元/年 <span class="tag-fact">事实</span></td>
-          <td>88 元/年 <span class="tag-fact">事实</span></td>
-          <td><span class="kano-tag kano-basic">基本型</span></td>
-        </tr>
-        <tr>
-          <td class="dim-cell">会员规模</td>
-          <td>约 3500 万人 <span class="tag-fact">事实</span><span class="tag-verify">待交叉验证</span></td>
-          <td>超 4200 万人 <span class="tag-fact">事实</span><span class="tag-verify">待交叉验证</span></td>
-          <td><span class="kano-tag kano-expect">期望型</span></td>
-        </tr>
-        <tr>
-          <td class="dim-cell">续费率</td>
-          <td>69.9% <span class="tag-fact">事实</span><span class="tag-verify">待交叉验证</span></td>
-          <td>83.3% <span class="tag-fact">事实</span><span class="tag-verify">待交叉验证</span></td>
-          <td><span class="kano-tag kano-expect">期望型</span></td>
-        </tr>
-        <tr>
-          <td class="dim-cell">购物折扣</td>
-          <td>折上 95 折 + 专享立减 + 购物返利 <span class="tag-fact">事实</span></td>
-          <td>天猫超市 95 折 + 每月品类券最高省 500 元 <span class="tag-fact">事实</span></td>
-          <td><span class="kano-tag kano-basic">基本型</span></td>
-        </tr>
-        <tr>
-          <td class="dim-cell">生活权益</td>
-          <td>联合 600+ 品牌（餐饮/出行/影院等）<span class="tag-fact">事实</span></td>
-          <td>饿了么年卡 + 飞猪立减 200 + 高德打车 30 元/月券 <span class="tag-fact">事实</span></td>
-          <td><span class="kano-tag kano-excite">兴奋型</span></td>
-        </tr>
-        <tr>
-          <td class="dim-cell">娱乐权益</td>
-          <td>积分兑读书月卡（相对较少）<span class="tag-fact">事实</span></td>
-          <td>夸克网盘 VIP 年卡等（生活卡/全能卡）<span class="tag-fact">事实</span></td>
-          <td><span class="kano-tag kano-excite">兴奋型</span></td>
-        </tr>
-        <tr>
-          <td class="dim-cell">会员日</td>
-          <td>每月 8 日会员日专属优惠 <span class="tag-fact">事实</span></td>
-          <td>每天 2 元红包（购物卡）<span class="tag-fact">事实</span></td>
-          <td><span class="kano-tag kano-expect">期望型</span></td>
-        </tr>
-        <tr>
-          <td class="dim-cell">生态联名模式</td>
-          <td>与外部品牌"换量"合作 <span class="tag-fact">事实</span></td>
-          <td>阿里生态内部协同（饿了么/优酷/飞猪/银泰）<span class="tag-fact">事实</span></td>
-          <td><span class="kano-tag kano-excite">兴奋型</span></td>
-        </tr>
-        <tr>
-          <td class="dim-cell">权益结构类型</td>
-          <td>统一 PLUS 会员包 <span class="tag-infer">推断</span></td>
-          <td>购物卡 / 生活卡 / 全能卡 分层 <span class="tag-fact">事实</span></td>
-          <td><span class="kano-tag kano-expect">期望型</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="matrix-note">▲ 功能对标矩阵：行=权益维度，列=平台，Kano 列标注该维度对用户满意度的属性类型</p>
-
-    <!-- 综合判断 -->
-    <div class="verdict-grid">
-      <div class="verdict-card jd">
-        <h3><span class="platform-jd">京东 PLUS</span></h3>
-        <div class="verdict-keyword" style="color:var(--jd-red);">自营强绑 · 广度覆盖</div>
-        <p>
-          以自营商品折扣为核心锚点，叠加 600+ 外部品牌"换量"式联名，权益广度大但生态闭环弱于淘宝。会员日机制（每月 8 日）集中式拉动，适合高频自营用户。
-          <span class="tag-infer">推断</span>
-        </p>
-      </div>
-      <div class="verdict-card tb">
-        <h3><span class="platform-tb">淘宝 88VIP</span></h3>
-        <div class="verdict-keyword" style="color:var(--tb-orange);">生态闭环 · 深度锁客</div>
-        <p>
-          依托阿里系（饿了么/优酷/飞猪/银泰）内部协同，构建跨场景生态闭环，续费率 83.3% 显著领先。分层权益包（购物卡/生活卡/全能卡）让用户灵活匹配需求，锁客力更强。
-          <span class="tag-infer">推断</span>
-        </p>
-      </div>
-    </div>
-
-    <div class="insight-box infer">
-      <div class="insight-title">🔍 综合判断 <span class="tag-infer">推断</span></div>
-      <p>
-        两平台权益体系在"省钱+服务+联名"三大模块上趋同，但战略侧重不同：<strong>京东 PLUS 走"自营体验+外部换量"的联邦式路线</strong>，核心竞争力在于自营物流体验和购物返利机制；<strong>淘宝 88VIP 走"生态协同+分层选择"的帝国式路线</strong>，核心竞争力在于跨场景绑定和高续费锁客。从用户规模（4200 万 vs 3500 万）和续费率（83.3% vs 69.9%）数据看，88VIP 当前在用户黏性维度略占上风，但京东 PLUS 的灵活定价（99–149 元）可能更适合价格敏感用户。
-      </p>
-    </div>
-
-    <!-- 续费率对比可视化 -->
-    <h4 style="margin:20px 0 8px;font-size:15px;">续费率对比</h4>
-    <div class="score-row">
-      <div class="score-label" style="color:var(--jd-red);">京东 PLUS</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar bar-jd" style="width:69.9%;">69.9%</div>
-      </div>
-    </div>
-    <div class="score-row">
-      <div class="score-label" style="color:var(--tb-orange);">淘宝 88VIP</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar bar-tb" style="width:83.3%;">83.3%</div>
-      </div>
-    </div>
-    <p class="source-ref">数据来源：<a class="source-link" href="https://m.36kr.com/p/3025608620418308" target="_blank">36氪·购买体验调研报告</a> <span class="tag-verify">待交叉验证</span></p>
-
-    <!-- 会员规模对比可视化 -->
-    <h4 style="margin:20px 0 8px;font-size:15px;">会员规模对比</h4>
-    <div class="score-row">
-      <div class="score-label" style="color:var(--jd-red);">京东 PLUS</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar bar-jd" style="width:70%;">~3500 万</div>
-      </div>
-    </div>
-    <div class="score-row">
-      <div class="score-label" style="color:var(--tb-orange);">淘宝 88VIP</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar bar-tb" style="width:84%;">~4200 万</div>
-      </div>
-    </div>
-    <p class="source-ref">数据来源：<a class="source-link" href="https://m.36kr.com/p/3025608620418308" target="_blank">36氪·购买体验调研报告</a> <span class="tag-verify">待交叉验证</span></p>
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>📡 渠道</h4>
+    <div class="gap">未采集</div>
   </div>
-
-  <!-- ========== 2. 逐点详述 ========== -->
-  <div class="section">
-    <div class="section-title">
-      <span class="icon" style="background:#1890FF;">2</span>
-      逐维详述
-    </div>
-
-    <!-- 2.1 权益类型与层次 -->
-    <div class="detail-subsection">
-      <h3>2.1 权益类型与层次 <span class="kano-tag kano-basic" style="font-size:11px;">基本型 + 兴奋型混合</span></h3>
-      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">
-        对应子问题：京东与淘宝各自的会员权益体系包含哪些具体权益类型？<br>
-        分析框架：功能对标矩阵 — 按"购物 / 生活 / 娱乐 / 会员日"四大模块逐一对标。
-      </p>
-
-      <div class="card-grid">
-        <div class="card card-jd">
-          <h4><span class="platform-jd">京东 PLUS</span> 权益构成</h4>
-          <ul>
-            <li><strong>购物权益</strong>：折上 95 折、专享立减、购物返利，部分自营商品有 PLUS 专属价 <span class="tag-fact">事实</span></li>
-            <li><strong>会员日</strong>：每月 8 日会员日专属优惠 <span class="tag-fact">事实</span></li>
-            <li><strong>生活权益</strong>：联合肯德基、麦当劳、汉堡王、万达电影、滴滴出行等 600+ 品牌合作 <span class="tag-fact">事实</span></li>
-            <li><strong>娱乐权益</strong>：积分兑换读书月卡（种类相对较少）<span class="tag-fact">事实</span></li>
-            <li><strong>联名模式</strong>：与外部品牌"换量"合作 <span class="tag-fact">事实</span></li>
-          </ul>
-          <p class="source-ref">
-            来源：<a class="source-link" href="https://zhuanlan.zhihu.com/p/1962482385502315371" target="_blank">知乎·京东PLUS与88VIP权益拆解</a>、
-            <a class="source-link" href="https://m.36kr.com/p/3025608620418308" target="_blank">36氪·购买体验调研</a>
-          </p>
-        </div>
-        <div class="card card-tb">
-          <h4><span class="platform-tb">淘宝 88VIP</span> 权益构成</h4>
-          <ul>
-            <li><strong>购物权益</strong>：天猫超市 95 折（价格越高优惠越多）、每月可领品类券最高省 500 元 <span class="tag-fact">事实</span></li>
-            <li><strong>每日红包</strong>：购物卡每天 2 元红包 <span class="tag-fact">事实</span></li>
-            <li><strong>生活权益</strong>：饿了么超级吃货年卡、飞猪旅行全年酒店立减 200 元、高德打车每月 30 元现金券 <span class="tag-fact">事实</span></li>
-            <li><strong>娱乐权益</strong>：夸克网盘 VIP 年卡等（生活卡/全能卡可领）<span class="tag-fact">事实</span></li>
-            <li><strong>权益分层</strong>：购物卡、生活卡、全能卡等不同类型 <span class="tag-fact">事实</span></li>
-            <li><strong>联名模式</strong>：阿里生态内部协同（饿了么/优酷/飞猪/银泰）<span class="tag-fact">事实</span></li>
-          </ul>
-          <p class="source-ref">
-            来源：<a class="source-link" href="https://zhuanlan.zhihu.com/p/1962482385502315371" target="_blank">知乎·京东PLUS与88VIP权益拆解</a>、
-            <a class="source-link" href="https://m.36kr.com/p/3025608620418308" target="_blank">36氪·购买体验调研</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="insight-box">
-        <div class="insight-title">📌 维度小结 <span class="tag-fact">事实</span></div>
-        <p>
-          两平台付费会员权益均由"省钱+服务+联名"三部分组成，且趋向相似。但在<strong>结构设计</strong>上有显著差异：88VIP 提供购物卡/生活卡/全能卡的分层选择；京东 PLUS 为统一权益包模式（后者为推断 <span class="tag-infer">推断</span>，档案中仅提及 88VIP 有分层，未明确京东 PLUS 是否有分层）。
-        </p>
-      </div>
-
-      <div class="insight-box infer">
-        <div class="insight-title">💡 洞察 <span class="tag-infer">推断</span></div>
-        <p>
-          <strong>京东 PLUS 的"广度联盟"策略</strong>（600+ 外部品牌）看似覆盖面大，但"换量"合作深度有限，用户感知可能偏碎片化。<strong>淘宝 88VIP 的"深度闭环"策略</strong>依托阿里系内部协同，跨场景体验更连贯，但也意味着对阿里生态的依赖度更高——如果用户不使用饿了么或飞猪，部分权益价值将大打折扣。
-        </p>
-      </div>
-    </div>
-
-    <!-- 2.2 权益使用规则对比 -->
-    <div class="detail-subsection">
-      <h3>2.2 权益使用规则对比 <span class="kano-tag kano-basic" style="font-size:11px;">基本型</span></h3>
-      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">
-        对应子问题：核心权益在使用限制、叠加规则、适用范围方面有什么具体差异？<br>
-        分析框架：功能对标矩阵 — 按"折扣机制 / 优惠券发放与叠加 / 适用范围 / 频次设计"逐一对标。
-      </p>
-
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>规则维度</th>
-            <th class="col-jd">京东 PLUS</th>
-            <th class="col-tb">淘宝 88VIP</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="dim-cell">折扣机制</td>
-            <td>折上 95 折，部分自营商品有 PLUS 专属价 <span class="tag-fact">事实</span></td>
-            <td>天猫超市 95 折，价格越高优惠越多 <span class="tag-fact">事实</span></td>
-          </tr>
-          <tr>
-            <td class="dim-cell">优惠券发放</td>
-            <td>购物返利机制（具体规则未详述）<span class="tag-fact">事实</span></td>
-            <td>每月可领品类券，最高省 500 元/月 <span class="tag-fact">事实</span></td>
-          </tr>
-          <tr>
-            <td class="dim-cell">日常权益频次</td>
-            <td>每月 8 日集中释放（会员日模式）<span class="tag-fact">事实</span></td>
-            <td>每天 2 元红包（购物卡，日常高频）<span class="tag-fact">事实</span></td>
-          </tr>
-          <tr>
-            <td class="dim-cell">适用范围</td>
-            <td>自营商品为主 <span class="tag-infer">推断</span>（档案仅提"部分自营商品"有专属价，未明确全量适用范围）</td>
-            <td>天猫超市为主 + 品类券覆盖更广 <span class="tag-infer">推断</span>（档案提及"天猫超市 95 折"，品类券适用范围未详述）</td>
-          </tr>
-          <tr>
-            <td class="dim-cell">叠加规则</td>
-            <td colspan="2" style="text-align:center;color:#999;">
-              ⚠️ 档案中未获取到两平台权益叠加规则的具体数据
-              <span class="tag-verify">待补充</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="insight-box infer">
-        <div class="insight-title">💡 洞察 <span class="tag-infer">推断</span></div>
-        <p>
-          <strong>频次设计是关键差异点</strong>：京东 PLUS 采用"月度爆发"模式（每月 8 日会员日），适合制造周期性消费高峰；淘宝 88VIP 采用"日常渗透"模式（每天 2 元红包），旨在培养用户每日打开习惯。从行为心理学角度看，高频小额激励（88VIP）更有利于习惯养成，这可能是其续费率领先的重要原因之一。
-        </p>
-      </div>
-
-      <div class="gap-box">
-        <div class="gap-title">⚠️ 数据缺口</div>
-        <p>
-          两平台权益的<strong>叠加规则</strong>（如 PLUS 折扣能否与平台券叠加、88VIP 95 折能否与品类券叠加）在本次档案中未获取到具体数据。建议参考两平台官方"优惠叠加说明"或结算页规则进行补充。
-        </p>
-      </div>
-    </div>
-
-    <!-- 2.3 权益发放策略对比 -->
-    <div class="detail-subsection">
-      <h3>2.3 权益发放策略对比 <span style="font-size:12px;color:#999;">（SOV 同口径对比框架）</span></h3>
-      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">
-        对应子问题：权益发放的时机选择、发放频次、发放规模有什么不同？<br>
-        分析框架：SOV（声量份额）— 按"发放时机 / 发放频次 / 发放逻辑 / 规模指标"同口径对比。
-      </p>
-
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>策略维度</th>
-            <th class="col-jd">京东 PLUS</th>
-            <th class="col-tb">淘宝 88VIP</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="dim-cell">日常发放</td>
-            <td>每月 8 日会员日集中发放专属优惠 <span class="tag-fact">事实</span></td>
-            <td>每天 2 元红包 + 每月品类券（最高 500 元）<span class="tag-fact">事实</span></td>
-          </tr>
-          <tr>
-            <td class="dim-cell">发放频次</td>
-            <td>月频（每月 1 次集中会员日）<span class="tag-infer">推断</span></td>
-            <td>日频（每天红包）+ 月频（品类券）<span class="tag-fact">事实</span></td>
-          </tr>
-          <tr>
-            <td class="dim-cell">定价策略</td>
-            <td>99–149 元/年（弹性定价，可能受限时优惠影响）<span class="tag-fact">事实</span></td>
-            <td>88 元/年（统一定价）<span class="tag-fact">事实</span></td>
-          </tr>
-          <tr>
-            <td class="dim-cell">大促联动</td>
-            <td colspan="2" style="text-align:center;color:#999;">
-              ⚠️ 档案中未获取到两平台大促期间（618/双11）权益发放规模的具体对比数据
-              <span class="tag-verify">待补充</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="dim-cell">发放规模</td>
-            <td colspan="2" style="text-align:center;color:#999;">
-              ⚠️ 档案中未获取到具体发券量/发券金额等规模数据
-              <span class="tag-verify">待补充</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="insight-box infer">
-        <div class="insight-title">💡 运营策略差异解读 <span class="tag-infer">推断</span></div>
-        <p>
-          <strong>京东 PLUS 的"低频高感知"策略</strong>：通过月度会员日集中制造权益感知峰值，配合自营折扣和购物返利，构建"买贵的更划算"的价值主张。弹性定价（99–149 元）暗示京东更注重拉新转化，用价格锚点吸引价格敏感用户。<br><br>
-          <strong>淘宝 88VIP 的"高频低门槛"策略</strong>：每日红包 + 月度品类券，让用户每天都有理由打开淘宝，配合 88 元统一低价定位，降低决策门槛。这种"润物细无声"的策略更适合培养平台依赖性。
-        </p>
-      </div>
-
-      <div class="insight-box">
-        <div class="insight-title">📌 定价与续费的关联 <span class="tag-fact">事实</span> + <span class="tag-infer">推断</span></div>
-        <p>
-          88VIP 年费 88 元低于京东 PLUS 的 99–149 元（事实），且续费率高出 13.4 个百分点（83.3% vs 69.9%，事实）。<strong>推断</strong>：更低的年费降低了续费决策成本，叠加日频权益触达带来的"沉没感知"，共同推高了 88VIP 的续费率。但也不排除阿里生态协同本身就比京东的"换量联盟"有更强的场景绑定力。
-        </p>
-      </div>
-    </div>
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>🤝 客户关系</h4>
+    <div class="fact">2024 新签合同 >$450M（含 Launch+Space Systems 合并口径）</div>
   </div>
-
-  <!-- ========== 3. 方法说明 ========== -->
-  <div class="section">
-    <div class="section-title">
-      <span class="icon" style="background:#52C41A;">3</span>
-      方法说明
-    </div>
-    <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">
-      本报告的分析过程遵循"目的定位 → 问题拆解 → 采集 → 筛选 → 提炼 → 报告"的全流程透明方法论。
-    </p>
-
-    <div class="method-grid">
-      <div class="method-card">
-        <h4>🔬 分析模型</h4>
-        <p>
-          <strong>产品能力维度</strong>：功能对标矩阵（行=权益维度，列=平台）+ Kano 模型（标注各维度属于基本/期望/兴奋属性，以识别差异化竞争力所在）<br><br>
-          <strong>营销运营维度</strong>：SOV（声量份额）同口径对比框架 — 按发放时机、频次、规模、渠道等指标对齐对比
-        </p>
-      </div>
-      <div class="method-card">
-        <h4>🔍 检索与筛选策略</h4>
-        <p>
-          每个子问题设计宽搜、精搜+剔噪、证伪式三条检索式。候选池 30 条经两层筛选（方向匹配 → 质量精挑），最终入选 4 条深度信源。话题类型判定为 B 类（产品运营），优选含具体数据对比和策略拆解的深度文章。
-        </p>
-      </div>
-      <div class="method-card">
-        <h4>📐 子问题覆盖</h4>
-        <p>
-          总共拆解 8 个子问题（产品能力 4 + 营销运营 4），本期重点采集 3 个核心子问题：权益类型与层次、使用规则、发放策略。其余 5 个子问题（升级门槛、有效期管理、推广渠道、触达率、联动运营）暂缓待补。
-        </p>
-      </div>
-      <div class="method-card">
-        <h4>📊 信源构成</h4>
-        <p>
-          入选 4 个信源：知乎专栏权益拆解文章 1 篇、36 氪调研报告 1 篇、人人都是产品经理分析文章 2 篇。均为深度二手分析类信源，缺少官方一手数据源。实际成功抓取并提炼证据的信源为 2 个（知乎 + 36 氪）。
-        </p>
-      </div>
-    </div>
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>💰 收入来源（重点）</h4>
+    <div class="gap">分部收入明细未抓取；一次性 vs 经常性占比未知</div>
   </div>
-
-  <!-- ========== 4. 局限与待补 ========== -->
-  <div class="section">
-    <div class="section-title">
-      <span class="icon" style="background:#FF4D4F;">4</span>
-      局限与待补
-    </div>
-
-    <ul class="limitation-list">
-      <li class="critical">
-        <strong>🔴 信源单一性风险</strong>：本次核心证据仅来自 2 个信源（知乎专栏 + 36 氪调研），均为二手分析类内容，缺少京东/淘宝官方会员页面、官方公告等一手权威信源。所有事实性数据（会员规模、续费率、年费等）均标注为"待交叉验证"。
-      </li>
-      <li class="critical">
-        <strong>🔴 抓取未完成</strong>：入选的 4 个信源中，仅成功抓取 2 个（知乎 + 36 氪）。人人都是产品经理的 2 篇文章（优惠券组合策略分析、购物车形态与营销策略对比）未能成功提取证据，导致"使用规则叠加"和"营销联动"维度的数据严重不足。建议人工访问以下 URL 复核：
-        <br>
-        <a class="source-link" href="https://www.woshipm.com/pd/4454361.html" target="_blank">https://www.woshipm.com/pd/4454361.html</a><br>
-        <a class="source-link" href="https://www.woshipm.com/evaluating/3259713.html" target="_blank">https://www.woshipm.com/evaluating/3259713.html</a>
-      </li>
-      <li>
-        <strong>🟡 会员等级体系未覆盖</strong>：档案明确标注"正文未明确说明具体的会员等级划分体系"。京东是否有多个等级层次（如铜牌/银牌/金牌 PLUS）、淘宝 88VIP 的购买门槛（如是否需淘气值 1000 分）等关键信息缺失。
-      </li>
-      <li>
-        <strong>🟡 暂缓子问题（5 项）</strong>：以下维度未在本期采集，完整性受限：
-        ① 各等级升级条件（消费金额/订单数/活跃度）
-        ② 有效期设置与保级规则
-        ③ 推广渠道组合与投入占比
-        ④ 触达率、激活率、使用率等效果数据
-        ⑤ 大促联动与跨界营销运营
-      </li>
-      <li>
-        <strong>🟡 权益叠加规则缺失</strong>：用户最关心的"PLUS 折扣能否与平台券叠加""88VIP 95 折能否与品类券叠加"等核心使用规则，在本次档案中无数据支撑，需人工查阅两平台结算页规则。
-      </li>
-      <li>
-        <strong>🟡 大促发放规模缺失</strong>：618/双 11 等大促期间的权益发放规模、频次变化、特殊权益等运营策略数据未获取到，无法完成 SOV 框架中"投放量级"维度的对比。
-      </li>
-      <li>
-        <strong>🟡 数据时效性</strong>：36 氪调研报告中的会员规模和续费率数据的具体统计时间未明确（档案标注为截至发稿前），可能存在滞后。两平台权益体系更新频繁（如 88VIP 2024–2025 年经历多次权益调整），部分权益细节可能已发生变化。
-      </li>
-    </ul>
-
-    <div class="gap-box">
-      <div class="gap-title">📋 人工复核建议清单</div>
-      <p>
-        1. 访问京东 PLUS 官方会员页面，核实当前权益列表、等级划分与最新年费<br>
-        2. 访问淘宝 88VIP 官方页面，核实购物卡/生活卡/全能卡的具体权益明细与价格<br>
-        3. 在两平台实际下单场景中验证优惠券叠加规则<br>
-        4. 查阅两平台最近一次大促（如 2025 年 618）的会员权益公告<br>
-        5. 手动访问未成功抓取的 2 个信源 URL，提取优惠券策略与营销对比数据
-      </p>
-    </div>
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>🏭 核心资源</h4>
+    <div class="inference">2021 年收购 SolAero 带来的太阳能电池产能为关键资产之一</div>
   </div>
-
-  <!-- ========== FOOTNOTE ========== -->
-  <div class="footnote">
-    <p>
-      <strong>声明</strong>：本报告所有事实性陈述均来源于数据档案中的证据提炼，已标注 <span class="tag-fact">事实</span> 标签与来源链接。所有超出档案证据的归纳、推论与洞察均标注 <span class="tag-infer">推断</span> 标签。数据来源为二手分析类信源，标注 <span class="tag-verify">待交叉验证</span> 的内容建议以官方一手数据为准。
-    </p>
-    <p style="margin-top:8px;">
-      信源引用：
-      [1] <a class="source-link" href="https://zhuanlan.zhihu.com/p/1962482385502315371" target="_blank">知乎·双11买谁更省钱？京东PLUS和淘宝88VIP权益大拆解</a> ｜
-      [2] <a class="source-link" href="https://m.36kr.com/p/3025608620418308" target="_blank">36氪·购买体验调研报告：哪个APP会员值得买？</a>
-    </p>
-    <p style="margin-top:8px;color:#bbb;">
-      分析模型：功能对标矩阵 + Kano 模型（产品能力维度）｜ SOV 同口径对比（营销运营维度）<br>
-      报告生成时间：2025 年 · 基于系统全过程透明档案自动生成
-    </p>
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>⚙️ 关键活动</h4>
+    <div class="inference">卫星总装测试 + 零部件批量生产</div>
   </div>
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>🔗 重要伙伴</h4>
+    <div class="gap">供应链披露未采集</div>
+  </div>
+  <div style="background:#fff;padding:15px;border-top:3px solid #2e5cb8">
+    <h4>💸 成本结构</h4>
+    <div class="fact">集团 Non-GAAP 毛利率 30-32%（Q1 2025 指引）</div>
+  </div>
+</div>
+
+<h3>4.1 集团口径下 Space Systems 的间接信号</h3>
+<table>
+<thead><tr><th>指标</th><th>FY2024</th><th>FY2025</th><th>YoY 变化</th></tr></thead>
+<tbody>
+<tr><td>集团总营收 <span class="tag tag-fact">事实</span></td><td>$436.2M</td><td>$601.8M</td><td><b style="color:#27ae60">+38%</b></td></tr>
+<tr><td>新签合同（全集团） <span class="tag tag-fact">事实</span></td><td>>$450M</td><td>未抓取</td><td>—</td></tr>
+<tr><td>Space Systems 分部营收 <span class="tag tag-low">缺口</span></td><td>未抓取</td><td>未抓取</td><td>—</td></tr>
+<tr><td>分部经常性收入占比 <span class="tag tag-low">缺口</span></td><td>未抓取</td><td>未抓取</td><td>—</td></tr>
+</tbody>
+</table>
+
+<div class="inference">基于行业公开背景知识与 RKLB 历史财报披露习惯（非本档案证据，仅作背景理解辅助）：Space Systems 在过去几个季度通常占集团总营收的 <b>60–75%</b>，是 RKLB 当前的"现金牛"，而 Launch Services（电子号火箭）虽更具品牌效应但收入贡献较小。<b>这一结构意味着：在中子号上线前，Space Systems 才是支撑 RKLB 营收增长曲线的真正主角</b>。<span style="color:#a05000">⚠️此判断超出本档案证据范围，请以最新 10-K 分部报告为准。</span></div>
+
+<div class="inference"><b>给小白的解读</b>：很多人误以为 RKLB 是"火箭公司"，但从收入结构看，它更像<b>"卫星零部件 + 总装服务商 + 火箭品牌"的复合体</b>。Space Systems 业务的稳定增长，是公司在中子号研发"烧钱黑洞"期还能撑住的根本。投资 RKLB，本质上是<b>用 Space Systems 的现金流，给中子号买一张"期权"</b>。</div>
+
+<div class="gap">档案缺口（重要）：Space Systems 的分部收入、毛利率、经常性收入占比、客户集中度，全部未在本期抓取中获得。这是<b>判断"零部件业务战略地位"的核心数据</b>，建议人工补充检索 RKLB 最新 10-K 的 "Segment Reporting" 章节，或财报电话会逐字稿。</div>
+
+<!-- ============ 维度四：竞争格局 ============ -->
+<h2>五、竞争格局简评（数据采集缺位，仅作方向性提示）</h2>
+
+<div class="gap">本期检索预算用于前三个最关键子问题，竞争格局的所有子问题（运载能力对比、价格对比、护城河对比、市场集中度）均被暂缓，<b>未产生证据</b>。以下内容全部为基于公开行业常识的【推断】，请勿作为投资硬依据。</div>
+
+<table>
+<thead><tr><th>对比维度</th><th>RKLB 中子号</th><th>SpaceX 猎鹰9</th><th>ULA Vulcan</th><th>Relativity Terran R</th></tr></thead>
+<tbody>
+<tr><td>LEO 运载能力（设计）<span class="tag tag-inf">推断</span></td><td>~13 吨</td><td>~22.8 吨</td><td>~27.2 吨</td><td>~20 吨</td></tr>
+<tr><td>状态</td><td>未首飞</td><td>商业成熟（年发射 >90 次）</td><td>已首飞</td><td>未首飞</td></tr>
+<tr><td>目标价位<span class="tag tag-inf">推断</span></td><td>中端</td><td>~$2,700/kg</td><td>~$13,000/kg</td><td>中端</td></tr>
+<tr><td>差异化定位<span class="tag tag-inf">推断</span></td><td>中型市场"非 SpaceX 替代"</td><td>规模垄断者</td><td>政府高可靠</td><td>3D 打印+复用</td></tr>
+</tbody>
+</table>
+
+<div class="inference"><b>方向性观察</b>：中子号定位的"~13 吨 LEO"中型市场，恰好是 SpaceX 猎鹰9 当前用"拼车（rideshare）"方式低价覆盖的区间。RKLB 的<b>商业逻辑成立的前提</b>是：①供应链客户（尤其美国政府与商业星座运营商）出于"不愿被 SpaceX 单一卡脖子"的考虑，愿意为第二供应商支付溢价；②中子号能把单位发射成本压到接近猎鹰9 的水平。<b>这两个前提中的任何一个被证伪，中子号的商业故事都会大打折扣</b>。</div>
+
+<!-- ============ 方法说明 ============ -->
+<h2>六、方法说明（让分析过程透明）</h2>
+<div class="method-box">
+<p><b>本次实际采用的分析模型</b>（来自档案②，按四个研究坐标分配）：</p>
+<ul>
+<li><b>产品能力坐标</b> → RICE 打分框架 + Kano 模型（评估中子号关键技术节点的可信度与属性层级）</li>
+<li><b>商业模式坐标</b> → 商业模式画布 BMC 9 模块（穷尽刻画 Space Systems 板块）</li>
+<li><b>财务与资本运作坐标</b> → 财务比率分析 + Altman Z-Score 思路（四类比率 + 破产风险判断）</li>
+<li><b>竞争格局坐标</b> → 战略群组图 + 战略钟（价格 × 感知价值）</li>
+</ul>
+<p><b>检索与筛选策略</b>：从 4 个研究坐标共拆解出 31 个 MECE 子问题，本期上限 3 条入选，优先选择"对投资决策直接、且公开数据可得"的子问题（财务烧钱速率、Archimedes 进度、Space Systems 收入结构）；其余 28 条暂缓，理由均在档案③中记录。</p>
+<p><b>抓取实际产出</b>：仅 1 个子问题（财务烧钱速率）获得了实质性硬数据（来自 AlphaQuery 与 RKLB 官方 IR）；Archimedes 发动机与 Space Systems 分部数据子问题<b>抓取后未提取到对应证据</b>，构成本报告最大的两个缺口。</p>
+</div>
+
+<!-- ============ 局限与待补 ============ -->
+<h2>七、局限与待补（如实呈现）</h2>
+
+<table>
+<thead><tr><th>类型</th><th>具体缺口</th><th>对结论的影响</th><th>建议补充检索方向</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="tag tag-low">关键数据缺失</span></td>
+  <td>Archimedes 发动机点火测试次数、累计时长、TRL 等级</td>
+  <td>中子号交付预期评估<b>无法量化</b>，仅能给出"风险溢价上调"的方向性判断</td>
+  <td>RKLB 官方 IR 2026 Q1/Q2 财报电话会逐字稿、官方 YouTube 测试视频、SpaceNews & NASASpaceFlight.com 跟踪报道</td>
+</tr>
+<tr>
+  <td><span class="tag tag-low">关键数据缺失</span></td>
+  <td>Space Systems 分部 2023-2025 营收、毛利率、经常性收入占比</td>
+  <td>无法验证 Space Systems "战略地位"的财务独立性</td>
+  <td>SEC EDGAR 上 RKLB 最新 10-K 的 Segment Reporting 章节、Q4 2025 财报附表</td>
+</tr>
+<tr>
+  <td><span class="tag tag-low">数据不完整</span></td>
+  <td>FY2023 与 FY2024 现金流量表对比数据（仅获取了 FY2025）</td>
+  <td>无法直接判断"亏损是否逐年收窄"的趋势</td>
+  <td>AlphaQuery 历史季度页 + SEC 10-K 五年财务摘要</td>
+</tr>
+<tr>
+  <td><span class="tag tag-mid">单一来源</span></td>
+  <td>FY2025 财务数据仅来自 AlphaQuery 单一第三方平台</td>
+  <td>数据准确性需交叉验证</td>
+  <td>建议人工核对 RKLB 10-K（SEC EDGAR）原文</td>
+</tr>
+<tr>
+  <td><span class="tag tag-low">完全未采集</span></td>
+  <td>竞争格局所有子问题（运载能力、价格、护城河、市场集中度）</td>
+  <td>无法对 RKLB 在中型运载赛道的竞争力作量化定位</td>
+  <td>FAA 商业发射许可数据库、Quilty Space 行业报告、SpaceNews 年度市场综述</td>
+</tr>
+<tr>
+  <td><span class="tag tag-low">完全未采集</span></td>
+  <td>中子号已签订单数量与合同金额、跳票历史、复用方案验证</td>
+  <td>无法支撑中子号"商业需求"假设的验证</td>
+  <td>RKLB 季度财报中的 backlog 披露、官方新闻稿、行业媒体长追踪文章</td>
+</tr>
+</tbody>
+</table>
+
+<div class="tldr" style="background:linear-gradient(135deg,#fdecea 0%,#fadbd8 100%);border-left-color:#e74c3c">
+  <div class="tldr-title" style="color:#c0392b">🚨 给读者的最终诚实提示</div>
+  本报告的<b>财务结论（第二章）证据较硬</b>，可信度中等偏上；但<b>中子号（第三章）与 Space Systems 细分（第四章）的关键数据缺位严重</b>，相关评估更多依赖结构化推断而非档案事实。<br><br>
+  <b>建议小白读者</b>：在动用真金白银投资之前，至少补充检索两份材料——①RKLB 最新 10-K 年报的"Segment Reporting"章节（看 Space Systems 真实收入与毛利）；②RKLB 最近一次财报电话会逐字稿（看管理层对 Archimedes 进度的最新口径）。这两份材料的获取成本很低（SEC EDGAR 与 Seeking Alpha 均免费），但能极大补强投资决策的事实底盘。
+</div>
+
+<div class="foot">
+报告生成时点：2026-06-23 ｜ 事实数据截至：FY2025 财务 (12-31) ｜ 本报告所有"事实"均带来源链接，所有"推断"均显式标注 ｜ 不构成投资建议
+</div>
 
 </div>
 </body>
