@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>电商App接入AI导购的产品机会评估与四链路设计建议</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --paper: #fffdf8;
+      --ink: #1f2428;
+      --muted: #687077;
+      --line: #ded8cb;
+      --brand: #245f73;
+      --accent: #b2563b;
+      --fact: #e9f3ef;
+      --infer: #f6eadf;
+      --gap: #fff3c9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      line-height: 1.65;
+    }
+    main { width: min(980px, calc(100vw - 32px)); margin: 0 auto; padding: 48px 0 64px; }
+    header { border-bottom: 1px solid var(--line); padding-bottom: 28px; margin-bottom: 28px; }
+    h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.14; margin: 12px 0 16px; letter-spacing: 0; }
+    h2 { font-size: 25px; line-height: 1.35; margin: 6px 0 18px; letter-spacing: 0; }
+    h3 { margin-top: 28px; }
+    p { margin: 0 0 12px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .pill, .tag, .source {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 10px;
+      font-size: 13px;
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255,255,255,.56);
+    }
+    .source { margin: 4px 6px 0 0; }
+    .tag-fact { background: var(--fact); border-color: #bfd8cc; }
+    .tag-inference { background: var(--infer); border-color: #e0c2a9; }
+    .tag-confidence { background: #eef0f1; }
+    .cite {
+      font-size: 12px;
+      line-height: 0;
+      margin-left: 3px;
+      white-space: nowrap;
+      vertical-align: super;
+    }
+    .cite a {
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .cite a:hover { text-decoration: underline; }
+    .thesis {
+      background: var(--paper);
+      border-left: 5px solid var(--brand);
+      padding: 18px 20px;
+      margin: 18px 0 0;
+      font-size: 18px;
+    }
+    .report-section, .limitations, .method, .references {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 18px 0;
+    }
+    .section-kicker { color: var(--brand); font-size: 13px; font-weight: 700; }
+    .support-list { list-style: none; padding: 0; margin: 0; }
+    .support-list li { border-top: 1px solid var(--line); padding: 14px 0; }
+    .support-list li:first-child { border-top: 0; }
+    .support-main { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+    .support-text { flex: 1 1 420px; min-width: 0; }
+    .sources { margin-top: 8px; }
+    .implication {
+      background: #edf4f6;
+      border: 1px solid #c7dde4;
+      border-radius: 8px;
+      margin-top: 16px;
+      padding: 14px 16px;
+    }
+    .limitations { background: var(--gap); border-color: #e1ca7b; }
+    .limitations ul { margin: 0; padding-left: 20px; }
+    .source-list { margin: 0; padding-left: 20px; }
+    .source-list li { margin: 10px 0; }
+    .muted { color: var(--muted); }
+    footer { color: var(--muted); margin-top: 28px; font-size: 13px; }
+    @media print {
+      body { background: white; }
+      main { width: 100%; padding: 16px 18px; }
+      .report-section, .limitations, .method, .thesis { break-inside: avoid; }
+    }
+    </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="meta">
+        <span class="pill">类型：决策支持</span>
+        <span class="pill">范围：产品分析，服务于设计落地</span>
+      </div>
+      <h1>电商App接入AI导购的产品机会评估与四链路设计建议</h1>
+      <p class="muted">原始诉求：评估当下电商App接入AI导购能力的产品机会，并输出面向搜索、推荐、商品决策和权益转化链路的设计建议。</p>
+      <div class="thesis"><strong>核心判断</strong><p>AI导购在四条链路上的产品机会并不均匀：搜索与商品决策环节已跑出可复制的&#x27;对话式选品+结构化比价&#x27;范式且用户认可其工具价值，推荐环节真正被验证的转化收益主要来自商家侧&#x27;AI+人&#x27;协同客服而非C端个性化推荐本身的升级，权益转化环节的AI化程度远低于其表面热度（更接近规则包装与营销话术）；同时一条贯穿四链路的信任断层与一条已经成型的监管红线，应作为设计的通用前提而非事后补丁——资源应优先押注&#x27;可信赖的决策辅助&#x27;，而非在四条链路均匀铺一层对话框。</p></div>
+    </header>
+    
+            <section class="report-section">
+              <div class="section-kicker">观点 01</div>
+              <h2>搜索与商品决策环节已跑出&#x27;对话式选品+结构化比价&#x27;的可复制范式，但卡在&#x27;标准模板感&#x27;与对话上下文稳定性两个具体短板</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">淘宝“千问AI购物助手”与京东“京东AI购”均已实现对话式商品挑选、对比与下单，淘宝的“拍立淘识图找低价”可对2000+商品同维度比价分层，京东“爱购”支持自然语言描述生成对比方案<sup class="cite"><a href="#source-1" title="查看参考来源 1">[1]</a><a href="#source-2" title="查看参考来源 2">[2]</a><a href="#source-3" title="查看参考来源 3">[3]</a><a href="#source-4" title="查看参考来源 4">[4]</a><a href="#source-5" title="查看参考来源 5">[5]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">AI试穿、品类适配等个性化场景普遍“套用标准身材/标准模板”，无法反映真实体型或个体差异，是当前实测中最一致的翻车点<sup class="cite"><a href="#source-6" title="查看参考来源 6">[6]</a><a href="#source-7" title="查看参考来源 7">[7]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">对话式交互的上下文污染是另一稳定出现的问题（如前序闲聊指令干扰后续推荐判断），淘宝、京东均被实测点名<sup class="cite"><a href="#source-8" title="查看参考来源 8">[8]</a><a href="#source-9" title="查看参考来源 9">[9]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">两家路线分化：淘宝靠“先追问锁定需求”服务复购/认准品牌用户，京东靠“直接给多选项清单”服务尝鲜用户；这是两种可复用的设计范式而非孰优孰劣<sup class="cite"><a href="#source-10" title="查看参考来源 10">[10]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>搜索/商品决策链路当下最值得投入的不是再造一个通用对话入口，而是攻克“个性化还原度”（如真实体型/真实场景适配）与“多轮对话的上下文隔离机制”这两个具体工程问题；同时应根据用户决策风格（认准品牌型 vs 尝鲜探索型）提供可切换的两套交互范式，而非用一套逻辑覆盖所有人</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 02</div>
+              <h2>推荐环节真正被验证的转化提升来自&#x27;AI+人&#x27;协同的客服场景，而不是端到端自动化的个性化推荐本身</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">阿里“AI店小蜜”升级为AI导购后，商家侧平均询单转化率提升10%（服饰商家达20%），“AI+人”协同转化效果首次全时段超越纯人工，平均转人工率下降45%<sup class="cite"><a href="#source-11" title="查看参考来源 11">[11]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">微盟导购Agent帮助品牌柒牌识别高价值客户，使其小程序商城70.6%的GMV来自这部分被精准识别和跟进的用户<sup class="cite"><a href="#source-12" title="查看参考来源 12">[12]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">上述两组数据均为单一信源转引平台/服务商官方口径，且场景是“商家侧客服转人工导购”，与C端纯算法个性化推荐（猜你喜欢类）并非同一产品形态，不能直接等同为“AI推荐=高转化”的通用结论<sup class="cite"><a href="#source-11" title="查看参考来源 11">[11]</a><a href="#source-12" title="查看参考来源 12">[12]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>如果推荐链路的设计目标是可衡量的转化/GMV提升，应优先参考“AI辅助决策+人工对高价值订单介入”的协同模式（如针对高客单价/高流失风险用户启动人工兜底），而非追求让算法完全替代人工判断；验收指标不应直接套用行业宣传数字，需自建对照组测试</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 03</div>
+              <h2>权益转化链路的AI化目前停留在&#x27;规则包装+话术&#x27;层面，离&#x27;系统级智能匹配&#x27;有明显距离——这是四条链路里差异化机会最大、也最薄弱的一段</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">淘宝“AI省钱”效果依赖购物车商品数量，日常少量购物省钱空间有限，本质是把现有满减规则做了一层对话包装；京东“AI找优惠”是基于历史习惯的降价商品推送，同样未涉及主动策略匹配<sup class="cite"><a href="#source-13" title="查看参考来源 13">[13]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">跨平台会员权益打通（如OneID统一积分/等级）当前主要由商家侧CRM/SaaS实现，尚未观察到这种打通发生在消费者可见的AI导购对话内部<sup class="cite"><a href="#source-14" title="查看参考来源 14">[14]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">本轮检索未能获得有实质内容的独立第三方用户体验证据来验证“AI省钱是否真的省到位”，现有的品牌自述（声称“真的太会省”）与一条无正文的质疑标题互相矛盾且均证据强度低，该判断应留待后续验证<sup class="cite"><a href="#source-15" title="查看参考来源 15">[15]</a><a href="#source-16" title="查看参考来源 16">[16]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>权益转化是当下产品机会最确定、但也最容易做成“假AI化”的一段——设计上应先解决“计算过程可解释”（让用户看懂AI是怎么算出这个优惠方案的），再谈“自动凑单/自动核销”的深度自动化；在没有扎实用户体验数据支撑前，建议先做小范围可用性测试而非直接大规模上线</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 04</div>
+              <h2>用户对AI导购的核心顾虑不是&#x27;好不好用&#x27;，而是&#x27;值不值得信&#x27;——信任断层是横在四条链路转化前的共同障碍</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">用户实测笔记直接给出“AI导购目前只能当参考工具，理性消费才是王道”的结论，并列举5个平台各自的具体翻车点（推荐离谱商品、链接出错、价格虚高等）<sup class="cite"><a href="#source-17" title="查看参考来源 17">[17]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">另有用户笔记指出AI导购缩短了“感兴趣到了解清楚”的距离，但“了解清楚到下单”仍有缺口，暗示信任与服务深度尚未达到人工导购水准<sup class="cite"><a href="#source-18" title="查看参考来源 18">[18]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">产品研究文章指出消费者同时质疑“商家自卖自夸”与“平台算法推高佣金商品/杀熟”，这是导购体系（覆盖推荐与权益两个环节）的核心矛盾，并提出让导购Agent扮演“自带信任感的第三方”（如模拟KOL选品逻辑）作为潜在解法<sup class="cite"><a href="#source-19" title="查看参考来源 19">[19]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>四条链路的设计都应该把“可解释性、可追溯来源、利益相关披露”当作通用设计原语——例如推荐理由要可查、权益计算过程要可展开、AI生成内容要明确标识——而不是各自为政地只优化各自的转化率指标；信任机制应该是平台级的设计基础设施，不是某条链路的可选项</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 05</div>
+              <h2>合规红线已经明确划定，且监管承诺书已点名本次研究覆盖的全部主流平台——设计方案必须把&#x27;显著标识&#x27;与&#x27;信息单独授权&#x27;前置进交互流程，而不是上线后再补救</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">北京市市场监管局2025年合规指引要求平台以显著方式告知算法推荐服务情况，收集敏感个人信息（生物特征/医疗/金融/行踪）须单独同意，不得以小字方式隐藏权益告知<sup class="cite"><a href="#source-20" title="查看参考来源 20">[20]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">京东、拼多多、抖音、小红书等8家平台已联合签订《促进AI技术规范应用承诺书》，明确AI生成内容须在显著位置标注，调查发现近九成受访者也主动要求这类标识<sup class="cite"><a href="#source-21" title="查看参考来源 21">[21]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">全国首例“AI代写种草笔记”案已宣判，表明虚假种草内容已进入司法追责范畴，这与权益转化/种草环节的设计风险直接相关<sup class="cite"><a href="#source-22" title="查看参考来源 22">[22]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>在搜索结果解读、推荐理由、商品对比内容、权益计算展示中，凡涉及AI生成或算法决策的部分，都需要原生嵌入“显著提示+可解释来源”，并将敏感信息收集设计为单独授权流程——这是四条链路设计的合规底线，而非锦上添花的可选项，违反将直接对应监管处罚风险</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 06</div>
+              <h2>四条链路不该平均用力：搜索与商品决策值得现在就重点投入，推荐链路的收益要先复用商家侧已验证的&#x27;AI+人&#x27;模式，权益转化是高风险高潜力的下一步而非首发项</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">搜索/商品决策已有多家平台实测验证的可用范式（s1），是当前确定性最高、可直接对标落地的两条链路<sup class="cite"><a href="#source-1" title="查看参考来源 1">[1]</a><a href="#source-2" title="查看参考来源 2">[2]</a><a href="#source-3" title="查看参考来源 3">[3]</a><a href="#source-10" title="查看参考来源 10">[10]</a><a href="#source-4" title="查看参考来源 4">[4]</a><a href="#source-5" title="查看参考来源 5">[5]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">推荐链路已被验证的量化收益集中在“AI+人”协同客服场景，C端纯算法推荐升级的独立收益证据不足，建议先以这一更确定的模式切入再扩展<sup class="cite"><a href="#source-11" title="查看参考来源 11">[11]</a><a href="#source-12" title="查看参考来源 12">[12]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">多平台AI导购用户规模与对话量仍在快速增长（如阿里店小蜜接入商家破百万、京东京言季度服务近8000万用户同比增长超200%），从产品动态推断行业资源投入处于扩张期而非收缩期，支持“现在投入”的时机判断，但缺乏财报/招聘数据的直接佐证<sup class="cite"><a href="#source-23" title="查看参考来源 23">[23]</a><a href="#source-24" title="查看参考来源 24">[24]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>建议的资源分配优先级：① 搜索/商品决策——投入个性化还原度与对话稳定性的工程优化（高确定性，快速见效）；② 推荐——先落地“AI辅助+人工介入高价值订单”的协同模式，验证后再扩展至更自动化的形态；③ 权益转化——作为差异化机会保留，但应先以可解释性与小范围测试为前提，不宜对标搜索/决策环节的投入节奏直接复制</p></div>
+            </section>
+            
+    <section class="limitations">
+      <h2>局限与待补</h2>
+      <ul>
+            <li>
+              <strong>权益转化环节（凑单/领券/核销）缺乏有实质内容的独立第三方用户体验证据，s3的结论主要依赖功能形态观察与inference，而非扎实的用户原声</strong>
+              <p>留白待补：建议后续用更具体的负向短语（如“AI凑单 算错”）在小红书/B站重新检索，或直接做小范围用户访谈</p>
+            </li>
+            
+            <li>
+              <strong>推荐环节用户对隐私/过度推荐的专属反馈未直接检索，s4关于推荐环节信任顾虑的判断部分借用了权益转化检索中的旁证</strong>
+              <p>留白待补：建议专门检索&#x27;AI推荐 隐私 杀熟&#x27;相关讨论</p>
+            </li>
+            
+            <li>
+              <strong>四条链路的资源投入趋势（s6）缺乏财报或招聘数据的直接佐证，仅基于产品动态规模做推断</strong>
+              <p>留白待补：建议读取上市电商公司最新财报/投资者电话会原文以获取更直接的资源投入信号</p>
+            </li>
+            </ul>
+    </section>
+    <section class="method">
+      <h2>方法与忠实度</h2>
+      <p>六个章节覆盖了搜索、推荐、商品决策、权益转化四条链路，且分别对应能力现状(s1隐含)、友商对标(s1-s3)、用户体验(s4)、合规边界(s5)与机会决策(s6)四个分析坐标，最终s6与每章的design_implication共同构成面向设计落地的具体建议，未将&#x27;四链路设计建议&#x27;收缩为单一链路的功能罗列或泛泛综述</p>
+      <p class="muted">事实与推断已用不同标签标记；证据出处统一列在文末，便于独立阅读与核验。</p>
+    </section>
+    <section class="references">
+      <h2>参考来源</h2>
+      <ol class="source-list">
+            <li id="source-1">
+              <div><strong>[1] <a href="https://www.36kr.com/p/3810475457110278" target="_blank" rel="noopener">千问与淘宝全面打通</a></strong></div>
+              <div class="muted">权威二手 · 千问与淘宝全面打通</div>
+            </li>
+            
+
+            <li id="source-2">
+              <div><strong>[2] <a href="https://www.neican.ai/insights/article-20260515211003598-1/" target="_blank" rel="noopener">千问AI购物助手</a></strong></div>
+              <div class="muted">权威二手 · 千问AI购物助手</div>
+            </li>
+            
+
+            <li id="source-3">
+              <div><strong>[3] <a href="https://www.36kr.com/p/3530093530225539" target="_blank" rel="noopener">识图比价2147款</a></strong></div>
+              <div class="muted">权威二手 · 识图比价2147款</div>
+            </li>
+            
+
+            <li id="source-4">
+              <div><strong>[4] <a href="https://www.36kr.com/p/3530093530225539" target="_blank" rel="noopener">智能程度不及淘宝</a></strong></div>
+              <div class="muted">权威二手 · 智能程度不及淘宝</div>
+            </li>
+            
+
+            <li id="source-5">
+              <div><strong>[5] <a href="https://www.neican.ai/insights/article-20260515211003598-1/" target="_blank" rel="noopener">准确性与可靠性7.2/10</a></strong></div>
+              <div class="muted">权威二手 · 准确性与可靠性7.2/10</div>
+            </li>
+            
+
+            <li id="source-6">
+              <div><strong>[6] <a href="https://www.36kr.com/p/3810475457110278" target="_blank" rel="noopener">套用标准身材模板</a></strong></div>
+              <div class="muted">权威二手 · 套用标准身材模板</div>
+            </li>
+            
+
+            <li id="source-7">
+              <div><strong>[7] <a href="https://www.neican.ai/insights/article-20260515211003598-1/" target="_blank" rel="noopener">标准模板局限</a></strong></div>
+              <div class="muted">权威二手 · 标准模板局限</div>
+            </li>
+            
+
+            <li id="source-8">
+              <div><strong>[8] <a href="https://www.36kr.com/p/3810475457110278" target="_blank" rel="noopener">上下文受到干扰</a></strong></div>
+              <div class="muted">权威二手 · 上下文受到干扰</div>
+            </li>
+            
+
+            <li id="source-9">
+              <div><strong>[9] <a href="https://www.neican.ai/insights/article-20260515211003598-1/" target="_blank" rel="noopener">上下文干扰偶发</a></strong></div>
+              <div class="muted">权威二手 · 上下文干扰偶发</div>
+            </li>
+            
+
+            <li id="source-10">
+              <div><strong>[10] <a href="https://www.36kr.com/p/3810475457110278" target="_blank" rel="noopener">淘宝适合复购京东适合尝鲜</a></strong></div>
+              <div class="muted">权威二手 · 淘宝适合复购京东适合尝鲜</div>
+            </li>
+            
+
+            <li id="source-11">
+              <div><strong>[11] <a href="https://36kr.com/p/3805688017198598" target="_blank" rel="noopener">询单转化率达10%</a></strong></div>
+              <div class="muted">权威二手(转引阿里官方数据) · 询单转化率达10%</div>
+            </li>
+            
+
+            <li id="source-12">
+              <div><strong>[12] <a href="http://www.cctime.com/m/1725496.htm" target="_blank" rel="noopener">贡献70.6%的销售额</a></strong></div>
+              <div class="muted">权威二手(转引微盟官方数据) · 贡献70.6%的销售额</div>
+            </li>
+            
+
+            <li id="source-13">
+              <div><strong>[13] <a href="https://www.36kr.com/p/3810475457110278" target="_blank" rel="noopener">依赖购物车商品数量</a></strong></div>
+              <div class="muted">权威二手 · 依赖购物车商品数量</div>
+            </li>
+            
+
+            <li id="source-14">
+              <div><strong>[14] <a href="https://www.youzan.com/chanpin/crmhuiyuantong" target="_blank" rel="noopener">OneID统一会员身份</a></strong></div>
+              <div class="muted">二手(产品官网) · OneID统一会员身份</div>
+            </li>
+            
+
+            <li id="source-15">
+              <div><strong>[15] <a href="https://www.xiaohongshu.com/search_result/69cccd0e000000002102ea91" target="_blank" rel="noopener">AI购真的太会省了</a></strong></div>
+              <div class="muted">一手(品牌官方) · AI购真的太会省了</div>
+            </li>
+            
+
+            <li id="source-16">
+              <div><strong>[16] <a href="https://www.xiaohongshu.com/search_result/6a2816db0000000021014be3" target="_blank" rel="noopener">帮平台把钱花完(标题级)</a></strong></div>
+              <div class="muted">社群 · 帮平台把钱花完(标题级)</div>
+            </li>
+            
+
+            <li id="source-17">
+              <div><strong>[17] <a href="https://www.xiaohongshu.com/search_result/6863d47c000000000d027158" target="_blank" rel="noopener">5大平台AI导购避坑</a></strong></div>
+              <div class="muted">社群 · 5大平台AI导购避坑</div>
+            </li>
+            
+
+            <li id="source-18">
+              <div><strong>[18] <a href="https://www.xiaohongshu.com/search_result/699cba9b000000000b009cf8" target="_blank" rel="noopener">了解清楚到下单还差一点</a></strong></div>
+              <div class="muted">社群 · 了解清楚到下单还差一点</div>
+            </li>
+            
+
+            <li id="source-19">
+              <div><strong>[19] <a href="https://www.woshipm.com/ai/6389051.html" target="_blank" rel="noopener">信任断层/杀熟担忧</a></strong></div>
+              <div class="muted">权威二手(产品人观点) · 信任断层/杀熟担忧</div>
+            </li>
+            
+
+            <li id="source-20">
+              <div><strong>[20] <a href="https://news.cctv.cn/2025/02/14/ARTI0083jAG27hdiOdwhDTZA250214.shtml" target="_blank" rel="noopener">算法推荐应明示规则</a></strong></div>
+              <div class="muted">一手(监管/官方报道) · 算法推荐应明示规则</div>
+            </li>
+            
+
+            <li id="source-21">
+              <div><strong>[21] <a href="https://news.bjd.com.cn/2025/12/04/11442981.shtml" target="_blank" rel="noopener">AI技术规范应用承诺书</a></strong></div>
+              <div class="muted">一手(监管/官方报道) · AI技术规范应用承诺书</div>
+            </li>
+            
+
+            <li id="source-22">
+              <div><strong>[22] <a href="https://news.qq.com/rain/a/20260512A044B500" target="_blank" rel="noopener">全国首例AI代写种草笔记案</a></strong></div>
+              <div class="muted">权威二手 · 全国首例AI代写种草笔记案</div>
+            </li>
+            
+
+            <li id="source-23">
+              <div><strong>[23] <a href="https://36kr.com/p/3805688017198598" target="_blank" rel="noopener">日均对话量近千万</a></strong></div>
+              <div class="muted">权威二手 · 日均对话量近千万</div>
+            </li>
+            
+
+            <li id="source-24">
+              <div><strong>[24] <a href="https://finance.sina.com.cn/stock/relnews/hk/2026-06-02/doc-inhzzivq4818335.shtml" target="_blank" rel="noopener">京言服务近8000万用户</a></strong></div>
+              <div class="muted">权威二手 · 京言服务近8000万用户</div>
+            </li>
+            </ol>
+    </section>
+    <footer>Generated by research v2.0</footer>
+  </main>
+</body>
+</html>
