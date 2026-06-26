@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>京东App优惠权益体验诊断：发现-理解门槛-判断可用-领取-使用五环节问题与设计优化方向</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --paper: #fffdf8;
+      --ink: #1f2428;
+      --muted: #687077;
+      --line: #ded8cb;
+      --brand: #245f73;
+      --accent: #b2563b;
+      --fact: #e9f3ef;
+      --infer: #f6eadf;
+      --gap: #fff3c9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      line-height: 1.65;
+    }
+    main { width: min(980px, calc(100vw - 32px)); margin: 0 auto; padding: 48px 0 64px; }
+    header { border-bottom: 1px solid var(--line); padding-bottom: 28px; margin-bottom: 28px; }
+    h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.14; margin: 12px 0 16px; letter-spacing: 0; }
+    h2 { font-size: 25px; line-height: 1.35; margin: 6px 0 18px; letter-spacing: 0; }
+    h3 { margin-top: 28px; }
+    p { margin: 0 0 12px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .pill, .tag, .source {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 10px;
+      font-size: 13px;
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255,255,255,.56);
+    }
+    .source { margin: 4px 6px 0 0; }
+    .tag-fact { background: var(--fact); border-color: #bfd8cc; }
+    .tag-inference { background: var(--infer); border-color: #e0c2a9; }
+    .tag-confidence { background: #eef0f1; }
+    .cite {
+      font-size: 12px;
+      line-height: 0;
+      margin-left: 3px;
+      white-space: nowrap;
+      vertical-align: super;
+    }
+    .cite a {
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .cite a:hover { text-decoration: underline; }
+    .thesis {
+      background: var(--paper);
+      border-left: 5px solid var(--brand);
+      padding: 18px 20px;
+      margin: 18px 0 0;
+      font-size: 18px;
+    }
+    .report-section, .limitations, .method, .references {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 18px 0;
+    }
+    .section-kicker { color: var(--brand); font-size: 13px; font-weight: 700; }
+    .support-list { list-style: none; padding: 0; margin: 0; }
+    .support-list li { border-top: 1px solid var(--line); padding: 14px 0; }
+    .support-list li:first-child { border-top: 0; }
+    .support-main { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+    .support-text { flex: 1 1 420px; min-width: 0; }
+    .sources { margin-top: 8px; }
+    .implication {
+      background: #edf4f6;
+      border: 1px solid #c7dde4;
+      border-radius: 8px;
+      margin-top: 16px;
+      padding: 14px 16px;
+    }
+    .limitations { background: var(--gap); border-color: #e1ca7b; }
+    .limitations ul { margin: 0; padding-left: 20px; }
+    .source-list { margin: 0; padding-left: 20px; }
+    .source-list li { margin: 10px 0; }
+    .muted { color: var(--muted); }
+    footer { color: var(--muted); margin-top: 28px; font-size: 13px; }
+    @media print {
+      body { background: white; }
+      main { width: 100%; padding: 16px 18px; }
+      .report-section, .limitations, .method, .thesis { break-inside: avoid; }
+    }
+    </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="meta">
+        <span class="pill">类型：决策支持</span>
+        <span class="pill">范围：产品分析，服务于设计落地</span>
+      </div>
+      <h1>京东App优惠权益体验诊断：发现-理解门槛-判断可用-领取-使用五环节问题与设计优化方向</h1>
+      <p class="muted">原始诉求：围绕京东 App 主购物链路中的优惠权益体验，分析用户在&#x27;买得快、买得准、买得放心&#x27;场景下如何发现权益、理解权益门槛、判断是否可用、完成领取与使用，并识别其中的产品体验问题。请最终输出可指导产品设计落地的优化建议。</p>
+      <div class="thesis"><strong>核心判断</strong><p>京东App的优惠权益体验问题不是单点的视觉瑕疵，而是五个旅程环节各自有结构性成因——发现环节缺归堆逻辑、理解环节是规则架构本身复杂、判断环节会在临场被系统状态打断、领取环节碎片到需要第三方工具代劳、使用环节的&#x27;预期-结果不一致&#x27;连官方都已承认；其中&#x27;判断是否可用&#x27;与&#x27;完成使用&#x27;两环证据强度最高（含黑猫投诉结构化数据与京东官方帮助文档的一手确认），直接侵蚀&#x27;买得放心&#x27;这一核心诉求，应作为设计优化的最高优先级，其次是&#x27;发现&#x27;与&#x27;领取&#x27;环节对&#x27;买得快&#x27;的拖累，&#x27;理解门槛&#x27;对&#x27;买得准&#x27;的影响则需要规则架构层面的改造而非仅做文案优化。</p></div>
+    </header>
+    
+            <section class="report-section">
+              <div class="section-kicker">观点 01</div>
+              <h2>优惠权益不是&#x27;没有&#x27;而是&#x27;找不全&#x27;——入口缺归堆逻辑，逼用户靠攻略才能凑齐权益</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">App Store一手长评具体指出&#x27;京券、东券、店铺券、平台补贴券等各类优惠券层层叠加……即便是十年老用户也难以理清使用逻辑&#x27;，且底导航与功能入口设计&#x27;令人困惑&#x27;，新老用户都需反复确认才能找到目标入口。<sup class="cite"><a href="#source-1" title="查看参考来源 1">[1]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">专业产品经理的竞品分析指出，京东的优惠券&#x27;没有归堆&#x27;（不同于淘宝按店铺维度归堆+折叠展示），卡片名称与详情信息存在重叠，视觉层级不一致，增加查找成本。<sup class="cite"><a href="#source-2" title="查看参考来源 2">[2]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">&#x27;领券中心入口不见了怎么办&#x27;的经验教程、以及多条互动量过万（最高87136）的&#x27;京东隐藏优惠券查询/领取教程&#x27;视频持续产出，说明默认导航路径下用户找不全权益是普遍现象，而非个别用户的操作失误。<sup class="cite"><a href="#source-3" title="查看参考来源 3">[3]</a><a href="#source-4" title="查看参考来源 4">[4]</a><a href="#source-5" title="查看参考来源 5">[5]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">综合三类证据可推断：问题根源是&#x27;信息架构缺少归堆/折叠逻辑&#x27;与&#x27;入口可见性随版本变化不稳定&#x27;的叠加，而非单一视觉问题。<sup class="cite"><a href="#source-6" title="查看参考来源 6">[6]</a><a href="#source-7" title="查看参考来源 7">[7]</a><a href="#source-8" title="查看参考来源 8">[8]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>建议把权益入口的信息架构从&#x27;平铺罗列&#x27;改为&#x27;店铺/场景维度归堆+超出数量折叠展示&#x27;（参考竞品淘宝的做法），并把权益曝光从&#x27;静态入口&#x27;升级为&#x27;结算前必经的权益核对清单&#x27;（如购物车/结算页强制汇总展示当前订单可用的全部权益，而非要求用户主动去找）；同时把权益入口的位置在版本迭代中保持稳定，避免改版导致老用户&#x27;入口认知&#x27;失效。</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 02</div>
+              <h2>门槛规则的复杂不是文案问题，是规则架构本身的多层叠加优先级在为难用户</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">京东运营视角的科普文章揭示，优惠叠加规则本身存在&#x27;平行式门槛计算&#x27;&#x27;总价促销/优惠券/虚拟资产的叠加优先级&#x27;&#x27;预售订单门槛需按立减/膨胀金额重新计算&#x27;等多层规则体系——这是连商家侧都需要专文讲解的复杂度。<sup class="cite"><a href="#source-9" title="查看参考来源 9">[9]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">App Store评论与豆瓣73万人活跃的优惠分享社群均独立反映同一困扰：用户&#x27;花费大量时间计算后，却发现优惠券无法叠加或超出使用范围&#x27;，且该社群近期同时存在多条&#x27;券到底在哪里&#x27;&#x27;怎么领&#x27;&#x27;是否能叠加&#x27;的困惑帖。<sup class="cite"><a href="#source-10" title="查看参考来源 10">[10]</a><a href="#source-11" title="查看参考来源 11">[11]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">据此可推断：理解门槛的体验问题根因在规则架构的结构性复杂（多层叠加优先级+特殊场景重算逻辑），意味着仅优化提示文案难以根治，需要从&#x27;规则计算与呈现&#x27;的产品架构层面解决。<sup class="cite"><a href="#source-12" title="查看参考来源 12">[12]</a><a href="#source-8" title="查看参考来源 8">[8]</a><a href="#source-13" title="查看参考来源 13">[13]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>建议把&#x27;判断是否划算&#x27;的认知负担从用户身上转移到系统：在购物车/商品页直接计算并展示&#x27;已叠加全部可用权益后的到手价&#x27;，而非展示一堆需要用户自行心算叠加关系的券面额；对不可叠加的组合，在用户选择时即时给出&#x27;为什么不能叠加&#x27;的具体原因（而非结算后才发现），把规则架构的复杂度封装在系统计算里、不向用户外露。</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 03</div>
+              <h2>权益的&#x27;可用判断&#x27;会在最后一步失灵——账号异常拦截和支付链路不同步让用户&#x27;临场失约&#x27;</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">黑猫投诉（新浪315平台，可溯投诉编号）真实案例：用户通过转发/助力/任务/消费/直播等方式攒下优惠券与红包，临下单时被系统以&#x27;订单异常&#x27;拦截、无任何提前提示，权益全部作废，客服拒绝处理；投诉标签直接包含&#x27;无法领取优惠券/无法享受会员权益/大数据杀熟&#x27;。<sup class="cite"><a href="#source-14" title="查看参考来源 14">[14]</a><a href="#source-15" title="查看参考来源 15">[15]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">三个不同UP主分别制作&#x27;国补支付时云闪付不显示优惠&#x27;解决教程，互动量分别达157960/30742/4681，是本轮全部证据中互动规模最大的单一问题集群，说明&#x27;支付那一刻优惠没有按预期生效&#x27;是高频、规模性的真实痛点。<sup class="cite"><a href="#source-16" title="查看参考来源 16">[16]</a><a href="#source-17" title="查看参考来源 17">[17]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">两类失效模式（账号/订单状态异常拦截、支付链路与展示不同步）共同指向同一个体验断点：用户在最接近成交的那一刻，才发现权益落空，且事先毫无预警。<sup class="cite"><a href="#source-18" title="查看参考来源 18">[18]</a><a href="#source-19" title="查看参考来源 19">[19]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>建议把&#x27;权益是否真的可用&#x27;的校验提前到用户能够补救的节点：①订单/账号状态异常时，应在用户进入结算页之前给出明确提示与原因（而非静默拦截），并保留权益的有效期豁免或申诉通道；②支付方式（如国补云闪付）与优惠展示的数据应实时同步校验，结算页金额与最终支付渠道实际扣款金额出现差异时，强制二次确认而非让用户事后发现；这两点都应纳入&#x27;买得放心&#x27;的核心体验红线指标去监控。</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 04</div>
+              <h2>三个独立第三方工具替用户做了京东不肯做的事：把领券变成不用记的事</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">开源用户脚本&#x27;记得领券！京东PLUS会员&#x27;（1303次安装）专门在结算页加一个&#x27;去领券&#x27;按钮以避免用户忘记领券；开源插件JDCouponAssistant支持自动化领取多达7种不同URL格式的权益类型；独立软件&#x27;雷诺JD查券助手&#x27;提供&#x27;定时抢券/时间校验&#x27;功能。三者彼此独立开发，却解决的是同一类问题：领取这件事，原生流程太容易忘、太碎、太赶。<sup class="cite"><a href="#source-20" title="查看参考来源 20">[20]</a><a href="#source-21" title="查看参考来源 21">[21]</a><a href="#source-22" title="查看参考来源 22">[22]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">2026年的媒体教程仍在指导用户记忆&#x27;福利500/600/900&#x27;等暗号搜索词才能进入隐藏领取页，并建议&#x27;保存到历史搜索记录&#x27;以减少重复输入——说明这条路径直到近期依然没有被官方导航直接收编。<sup class="cite"><a href="#source-23" title="查看参考来源 23">[23]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">第三方工具与暗号教程的并存是揭示性偏好证据：原生体验若足够顺手，用户通常不会专门开发或下载替代方案。<sup class="cite"><a href="#source-24" title="查看参考来源 24">[24]</a><a href="#source-25" title="查看参考来源 25">[25]</a><a href="#source-26" title="查看参考来源 26">[26]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>建议参考第三方工具已经验证的需求，把它们的功能官方化、内置化：①结算页/购物车增加&#x27;一键领取本订单可用的全部权益&#x27;按钮，替代用户主动跳转领券中心；②不同类型权益（日常券、PLUS专享券、信用券、金币权益等）统一聚合到一个领取入口与数据结构，而不是分散在多个独立路径；③对有抢领时效性的权益，提供主动提醒（而非要求用户用第三方工具定时刷新）。</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 05</div>
+              <h2>官方文档自己承认&#x27;预估价不是结算价&#x27;——这句免责声明本身就是结算页信任缺口的证据</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">京东官方帮助中心一手文档明确：&#x27;预估到手价&#x27;与&#x27;未来预估到手价&#x27;仅供参考，&#x27;具体的价格以实际结算页展示的价格为准&#x27;，且同一商品在商品详情页/活动会场/购物车等不同展示位的计算逻辑不同，&#x27;可能会出现二者计算出的预估到手价不一致的情况&#x27;。文档甚至自带FAQ&#x27;为什么我看到的预估到手价是XXX，但结算时无法享受这个价格&#x27;与&#x27;为什么我朋友看到的预估到手价和我看到的不一致&#x27;。<sup class="cite"><a href="#source-27" title="查看参考来源 27">[27]</a><a href="#source-28" title="查看参考来源 28">[28]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-fact">事实</span>
+                    <span class="support-text">同一篇App Store评论指出存在&#x27;虚假宣传嫌疑&#x27;的具体案例：界面标注&#x27;买会员送季卡&#x27;，付款后却无法兑现，客服答复前后矛盾；bilibili高互动视频（25016）反映用户对&#x27;凑单后退款是否仍保留优惠&#x27;普遍缺乏把握。<sup class="cite"><a href="#source-29" title="查看参考来源 29">[29]</a><a href="#source-30" title="查看参考来源 30">[30]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">由此可判断：&#x27;预估价≠结算价&#x27;且&#x27;不同页面/不同人看到的预估价可能不同&#x27;是平台自身承认存在的设计现实，而非用户误解；这意味着用户的&#x27;被坑感&#x27;有客观依据，结算页若不能稳定、清晰地解释&#x27;为什么是这个价&#x27;，信任损耗是结构性的而非个别用户敏感。<sup class="cite"><a href="#source-31" title="查看参考来源 31">[31]</a><a href="#source-8" title="查看参考来源 8">[8]</a><a href="#source-18" title="查看参考来源 18">[18]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>建议优先解决&#x27;同一商品不同页面预估价不一致&#x27;这一官方已承认的根因：统一商品详情页/活动会场/购物车/结算页的到手价计算逻辑（或在不一致时明确标注&#x27;最终价格请见结算页&#x27;并给出差异原因），结算页的优惠抵扣明细应逐项列出（券名+抵扣金额+计算依据），而非只给一个汇总数字；对&#x27;承诺型&#x27;权益（如买会员送季卡）应在权益生效后即时在&#x27;我的资产&#x27;中可查可核验，避免事后才发现承诺未兑现。</p></div>
+            </section>
+            
+            <section class="report-section">
+              <div class="section-kicker">观点 06</div>
+              <h2>五环节问题不是同等优先级——&#x27;判断可用&#x27;与&#x27;完成使用&#x27;对&#x27;买得放心&#x27;的杀伤力最大，应排在改造首位</h2>
+              <ul class="support-list">
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">在五个环节中，&#x27;判断是否可用&#x27;(s3)与&#x27;完成使用&#x27;(s5)分别获得了新浪315黑猫投诉结构化数据与京东官方帮助文档的一手确认，证据信度高于其余三环节主要依赖的社群证词与第三方工具存在性；且这两环节的失效后果直接对应&#x27;信任崩塌/被坑感/以后不会再用&#x27;，对应用户能否&#x27;买得放心&#x27;。<sup class="cite"><a href="#source-14" title="查看参考来源 14">[14]</a><a href="#source-15" title="查看参考来源 15">[15]</a><a href="#source-27" title="查看参考来源 27">[27]</a><a href="#source-28" title="查看参考来源 28">[28]</a><a href="#source-31" title="查看参考来源 31">[31]</a><a href="#source-8" title="查看参考来源 8">[8]</a><a href="#source-18" title="查看参考来源 18">[18]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">&#x27;发现&#x27;(s1)与&#x27;领取&#x27;(s4)环节的问题更直接影响&#x27;买得快&#x27;——用户要花额外时间找权益、领权益，但失败后果通常是&#x27;少省了钱&#x27;而非&#x27;被欺骗感&#x27;，严重度低于s3/s5但发生频率可能更高（教程类内容的持续高产出佐证）。<sup class="cite"><a href="#source-4" title="查看参考来源 4">[4]</a><a href="#source-5" title="查看参考来源 5">[5]</a><a href="#source-24" title="查看参考来源 24">[24]</a><a href="#source-25" title="查看参考来源 25">[25]</a><a href="#source-26" title="查看参考来源 26">[26]</a></sup></span>
+                  </div>
+                </li>
+                
+
+                <li>
+                  <div class="support-main">
+                    <span class="tag tag-inference">推断</span>
+                    <span class="support-text">&#x27;理解门槛&#x27;(s2)环节对应&#x27;买得准&#x27;，其改造收益最大但实施难度也最高，因为根因是规则架构本身而非呈现层，需要产品与规则引擎共同投入，建议作为中长期专项而非短期可上线的小改动。<sup class="cite"><a href="#source-9" title="查看参考来源 9">[9]</a><a href="#source-12" title="查看参考来源 12">[12]</a><a href="#source-8" title="查看参考来源 8">[8]</a><a href="#source-13" title="查看参考来源 13">[13]</a></sup></span>
+                  </div>
+                </li>
+                </ul>
+              <div class="implication"><strong>设计启示</strong><p>建议的优化优先级：① 高优先级、短期可上线——s3（提前校验+异常预警）与s5（统一到手价计算口径+结算页明细透明化），直接止损&#x27;买得放心&#x27;的信任损耗；② 中优先级——s1（入口归堆+结算前权益清单）与s4（一键领取+权益聚合），改善&#x27;买得快&#x27;；③ 长期专项——s2（规则架构层面的简化与自动计算），影响&#x27;买得准&#x27;但需要更大投入，建议单独立项推进。</p></div>
+            </section>
+            
+    <section class="limitations">
+      <h2>局限与待补</h2>
+      <ul>
+            <li>
+              <strong>缺乏&#x27;用户因发现不了权益而实际放弃下单/转化率下降&#x27;的量化数据，目前仅能从教程热度等行为信号间接推断重要性。</strong>
+              <p>留白待补：建议后续从京东自身数据埋点或第三方电商行业分析报告获取转化率/流失率数据，而非进一步堆砌社媒口碑。</p>
+            </li>
+            
+            <li>
+              <strong>缺乏因&#x27;判断可用性落差&#x27;导致的系统性流失/复购率下降数据，目前仅有黑猫投诉个案与App Store评论。</strong>
+              <p>留白待补：建议批量统计黑猫投诉同类关键词的投诉数量趋势，以衡量问题规模而非仅靠个案严重性判断。</p>
+            </li>
+            
+            <li>
+              <strong>缺乏&#x27;因领取繁琐而放弃使用优惠&#x27;的用户直接陈述或数据，目前仅为第三方工具存在性的间接（揭示性偏好）推断。</strong>
+              <p>留白待补：第三方工具的存在证明&#x27;有需求&#x27;，但无法精确量化&#x27;放弃率&#x27;，建议有条件时通过用户访谈或可用性测试直接获取。</p>
+            </li>
+            
+            <li>
+              <strong>本轮小红书渠道在实测中处于登录墙后（AUTH_REQUIRED），与doctor快照标注的可用状态不符，已切换为bilibili替代，可能遗漏小红书平台特有的图文测评类证据。</strong>
+              <p>工具可用性限制导致的留白，非证据本身不存在；若后续小红书登录态可用，建议补一轮检索做交叉验证。</p>
+            </li>
+            </ul>
+    </section>
+    <section class="method">
+      <h2>方法与忠实度</h2>
+      <p>本大纲覆盖了用户明确给出的全部5个旅程环节（发现-理解门槛-判断可用-领取-使用），每章都标注了与&#x27;买得快/买得准/买得放心&#x27;场景的关联并给出了design_implication具体优化方向，未把&#x27;优惠权益体验&#x27;收窄成单一环节或单一场景；s6进一步给出跨环节的优先级排序，直接服务于原始诉求&#x27;输出可指导产品设计落地的优化建议&#x27;这一终点，未膨胀到行业大盘对比或商业模式层面的无关内容。</p>
+      <p class="muted">事实与推断已用不同标签标记；证据出处统一列在文末，便于独立阅读与核验。</p>
+    </section>
+    <section class="references">
+      <h2>参考来源</h2>
+      <ol class="source-list">
+            <li id="source-1">
+              <div><strong>[1] <a href="https://apps.apple.com/cn/app/京东-又好又便宜/id414245413?see-all=reviews" target="_blank" rel="noopener">需反复确认才能找到目标入口</a></strong></div>
+              <div class="muted">一手社群体验 · 需反复确认才能找到目标入口</div>
+            </li>
+            
+
+            <li id="source-2">
+              <div><strong>[2] <a href="https://www.woshipm.com/pd/5239908.html" target="_blank" rel="noopener">京东没有优惠券归堆</a></strong></div>
+              <div class="muted">权威二手 · 京东没有优惠券归堆</div>
+            </li>
+            
+
+            <li id="source-3">
+              <div><strong>[3] <a href="https://jingyan.baidu.com/article/11c17a2c150e00b546e39dc9.html" target="_blank" rel="noopener">领券中心入口不见了怎么办</a></strong></div>
+              <div class="muted">一手社群体验 · 领券中心入口不见了怎么办</div>
+            </li>
+            
+
+            <li id="source-4">
+              <div><strong>[4] <a href="https://www.bilibili.com/video/BV1zu411P7Av" target="_blank" rel="noopener">隐藏的京东优惠券领取教程</a></strong></div>
+              <div class="muted">社群一手体验 · 隐藏的京东优惠券领取教程</div>
+            </li>
+            
+
+            <li id="source-5">
+              <div><strong>[5] <a href="https://www.bilibili.com/video/BV1KgtTetE6r" target="_blank" rel="noopener">京东隐藏优惠券查询方法</a></strong></div>
+              <div class="muted">社群一手体验 · 京东隐藏优惠券查询方法</div>
+            </li>
+            
+
+            <li id="source-6">
+              <div><strong>[6] <a href="https://jingyan.baidu.com/article/11c17a2c150e00b546e39dc9.html" target="_blank" rel="noopener">r0001</a></strong></div>
+              <div class="muted">一手社群体验</div>
+            </li>
+            
+
+            <li id="source-7">
+              <div><strong>[7] <a href="https://www.woshipm.com/pd/5239908.html" target="_blank" rel="noopener">r0003</a></strong></div>
+              <div class="muted">权威二手</div>
+            </li>
+            
+
+            <li id="source-8">
+              <div><strong>[8] <a href="https://apps.apple.com/cn/app/京东-又好又便宜/id414245413?see-all=reviews" target="_blank" rel="noopener">r0004</a></strong></div>
+              <div class="muted">一手社群体验</div>
+            </li>
+            
+
+            <li id="source-9">
+              <div><strong>[9] <a href="https://www.cnblogs.com/binyue/p/17374947.html" target="_blank" rel="noopener">平行式门槛计算规则</a></strong></div>
+              <div class="muted">权威二手 · 平行式门槛计算规则</div>
+            </li>
+            
+
+            <li id="source-10">
+              <div><strong>[10] <a href="https://www.douban.com/group/topic/474949793/" target="_blank" rel="noopener">满减和品类券是不是不能叠加了</a></strong></div>
+              <div class="muted">社群一手体验 · 满减和品类券是不是不能叠加了</div>
+            </li>
+            
+
+            <li id="source-11">
+              <div><strong>[11] <a href="https://apps.apple.com/cn/app/京东-又好又便宜/id414245413?see-all=reviews" target="_blank" rel="noopener">花费大量时间计算后却发现无法叠加</a></strong></div>
+              <div class="muted">一手社群体验 · 花费大量时间计算后却发现无法叠加</div>
+            </li>
+            
+
+            <li id="source-12">
+              <div><strong>[12] <a href="https://www.cnblogs.com/binyue/p/17374947.html" target="_blank" rel="noopener">r0007</a></strong></div>
+              <div class="muted">权威二手</div>
+            </li>
+            
+
+            <li id="source-13">
+              <div><strong>[13] <a href="https://www.bilibili.com/video/BV1v6421f7N1" target="_blank" rel="noopener">r0006</a></strong></div>
+              <div class="muted">社群一手体验</div>
+            </li>
+            
+
+            <li id="source-14">
+              <div><strong>[14] <a href="https://tousu.sina.cn/complaint/view/17392714538" target="_blank" rel="noopener">投诉编号17392714538</a></strong></div>
+              <div class="muted">一手（官方投诉平台结构化数据） · 投诉编号17392714538</div>
+            </li>
+            
+
+            <li id="source-15">
+              <div><strong>[15] <a href="https://tousu.sina.cn/complaint/view/17392829358" target="_blank" rel="noopener">投诉编号17392829358</a></strong></div>
+              <div class="muted">一手（官方投诉平台结构化数据） · 投诉编号17392829358</div>
+            </li>
+            
+
+            <li id="source-16">
+              <div><strong>[16] <a href="https://www.bilibili.com/video/BV1JSoqYWETF" target="_blank" rel="noopener">互动量157960</a></strong></div>
+              <div class="muted">社群一手体验 · 互动量157960</div>
+            </li>
+            
+
+            <li id="source-17">
+              <div><strong>[17] <a href="https://www.bilibili.com/video/BV1tTbyztEKG" target="_blank" rel="noopener">互动量30742</a></strong></div>
+              <div class="muted">社群一手体验 · 互动量30742</div>
+            </li>
+            
+
+            <li id="source-18">
+              <div><strong>[18] <a href="https://tousu.sina.cn/complaint/view/17392714538" target="_blank" rel="noopener">r0008</a></strong></div>
+              <div class="muted">一手</div>
+            </li>
+            
+
+            <li id="source-19">
+              <div><strong>[19] <a href="https://www.bilibili.com/video/BV1JSoqYWETF" target="_blank" rel="noopener">r0009</a></strong></div>
+              <div class="muted">社群一手体验</div>
+            </li>
+            
+
+            <li id="source-20">
+              <div><strong>[20] <a href="https://greasyfork.org/en/scripts/369909" target="_blank" rel="noopener">避免忘记领券</a></strong></div>
+              <div class="muted">开发者社群 · 避免忘记领券</div>
+            </li>
+            
+
+            <li id="source-21">
+              <div><strong>[21] <a href="https://gitee.com/hucaihui/JDCouponAssistant" target="_blank" rel="noopener">支持7种优惠券类型&amp;地址</a></strong></div>
+              <div class="muted">开发者社群 · 支持7种优惠券类型&amp;地址</div>
+            </li>
+            
+
+            <li id="source-22">
+              <div><strong>[22] <a href="https://www.crsky.com/soft/321936.html" target="_blank" rel="noopener">定时抢券</a></strong></div>
+              <div class="muted">社群/聚合 · 定时抢券</div>
+            </li>
+            
+
+            <li id="source-23">
+              <div><strong>[23] <a href="https://news.qq.com/rain/a/20260206A0516X00" target="_blank" rel="noopener">福利500福利600福利900</a></strong></div>
+              <div class="muted">权威二手媒体 · 福利500福利600福利900</div>
+            </li>
+            
+
+            <li id="source-24">
+              <div><strong>[24] <a href="https://greasyfork.org/en/scripts/369909" target="_blank" rel="noopener">r0010</a></strong></div>
+              <div class="muted">开发者社群</div>
+            </li>
+            
+
+            <li id="source-25">
+              <div><strong>[25] <a href="https://gitee.com/hucaihui/JDCouponAssistant" target="_blank" rel="noopener">r0010</a></strong></div>
+              <div class="muted">开发者社群</div>
+            </li>
+            
+
+            <li id="source-26">
+              <div><strong>[26] <a href="https://www.crsky.com/soft/321936.html" target="_blank" rel="noopener">r0010</a></strong></div>
+              <div class="muted">社群/聚合</div>
+            </li>
+            
+
+            <li id="source-27">
+              <div><strong>[27] <a href="https://help.jd.com/user/issue/35-3983.html" target="_blank" rel="noopener">预估到手价仅供参考</a></strong></div>
+              <div class="muted">一手官方 · 预估到手价仅供参考</div>
+            </li>
+            
+
+            <li id="source-28">
+              <div><strong>[28] <a href="https://help.jd.com/user/issue/35-3983.html" target="_blank" rel="noopener">我朋友看到的预估到手价和我看到的不一致</a></strong></div>
+              <div class="muted">一手官方 · 我朋友看到的预估到手价和我看到的不一致</div>
+            </li>
+            
+
+            <li id="source-29">
+              <div><strong>[29] <a href="https://www.bilibili.com/video/BV1KM4m1r7UH" target="_blank" rel="noopener">凑单满减后立马退款还可以享受优惠吗</a></strong></div>
+              <div class="muted">社群一手体验 · 凑单满减后立马退款还可以享受优惠吗</div>
+            </li>
+            
+
+            <li id="source-30">
+              <div><strong>[30] <a href="https://apps.apple.com/cn/app/京东-又好又便宜/id414245413?see-all=reviews" target="_blank" rel="noopener">买会员送季卡付款后无法兑现</a></strong></div>
+              <div class="muted">一手社群体验 · 买会员送季卡付款后无法兑现</div>
+            </li>
+            
+
+            <li id="source-31">
+              <div><strong>[31] <a href="https://help.jd.com/user/issue/35-3983.html" target="_blank" rel="noopener">r0013</a></strong></div>
+              <div class="muted">一手官方</div>
+            </li>
+            </ol>
+    </section>
+    <footer>Generated by research v2.0</footer>
+  </main>
+</body>
+</html>
